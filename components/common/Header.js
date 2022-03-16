@@ -4,8 +4,9 @@ import Link from "next/link";
 import { Popover, Transition } from "@headlessui/react";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
 
+//EDIT ME PLEASE
 //HEADER SETUP
-const logoUrl = "https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg";
+const logoUrl = "/logo.png";
 const navigation = {
   categories: [],
   pages: [{ name: "DemoPage", href: "/demo" }],

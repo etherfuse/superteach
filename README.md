@@ -3,6 +3,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 This project is using Nextjs + Tailwind + HeadlessUI + HeroIcons
 
 ## Getting Started
+
 First, install dependencies and run development server:
 
 ```bash
@@ -11,7 +12,10 @@ yarn dev
 ```
 
 ## Setup
+
 The Project has several branches depending of the starter point that you need. <br/>
 Main branch is the simplest and it should be fine for static simple websites.<br/><br/>
-For a simple Website you should configure the Seo Component, Header and Footer Components
+For a simple Website you should configure: <br/>
 
+- Seo, Header and Footer Components <br/>
+- Logo, OG and favicon images

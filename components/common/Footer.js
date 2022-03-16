@@ -1,6 +1,6 @@
 import SocialIcon from "@/components/icons/Social";
+//EDIT ME PLEASE
 const copyrightLabel = `©${new Date().getFullYear()} Molus.co Starter. All rights reserved.`;
-
 const socialLink = [
   {
     name: "Facebook",
