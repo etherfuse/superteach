@@ -9,7 +9,10 @@ import { MenuIcon, XIcon } from "@heroicons/react/outline";
 const logoUrl = "/logo.png";
 const navigation = {
   categories: [],
-  pages: [{ name: "DemoPage", href: "/demo" }],
+  pages: [
+    { name: "DemoPage", href: "/demo" },
+    { name: "Contact Us", href: "/contact" },
+  ],
 };
 
 const Header = () => {
