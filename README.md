@@ -19,3 +19,7 @@ For a simple Website you should configure: <br/>
 
 - Seo, Header and Footer Components <br/>
 - Logo, OG and favicon images
+
+Branch wmongodb needs env variables.
+MONGODB_DB=
+MONGODB_URI=
