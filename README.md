@@ -20,6 +20,17 @@ For a simple Website you should configure: <br/>
 - Seo, Header and Footer Components <br/>
 - Logo, OG and favicon images
 
+```
 Branch wmongodb needs env variables.
 MONGODB_DB=
 MONGODB_URI=
+
+//this is used for nextauth
+BASE_SECRET="yoursecrethere"
+NEXTAUTH_URL=http://localhost:3000
+
+//To sending emails using SMTP
+SMTP_HOST=
+SMTP_USER=
+SMTP_PASS=
+```
