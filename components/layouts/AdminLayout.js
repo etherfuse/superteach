@@ -7,12 +7,7 @@ import LoadingCircle from "@/components/common/loadingcircle";
 import classNames from "@/utils/classNames";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
-import {
-  HomeIcon,
-  UserIcon,
-  CubeIcon,
-  ShoppingBagIcon,
-} from "@heroicons/react/outline";
+import { HomeIcon, UserIcon } from "@heroicons/react/outline";
 
 const AdminLayout = ({ title, children, ...props }) => {
   const router = useRouter();
@@ -26,26 +21,8 @@ const AdminLayout = ({ title, children, ...props }) => {
       current: false,
     },
     {
-      name: "Usuarios",
+      name: "Users",
       href: "/admin/users",
-      icon: UserIcon,
-      current: false,
-    },
-    {
-      name: "Ordenes",
-      href: "/admin/orders",
-      icon: CubeIcon,
-      current: false,
-    },
-    {
-      name: "Tiendas",
-      href: "/admin/stores",
-      icon: ShoppingBagIcon,
-      current: false,
-    },
-    {
-      name: "Leads",
-      href: "/admin/leads",
       icon: UserIcon,
       current: false,
     },
