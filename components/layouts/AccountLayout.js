@@ -1,9 +1,9 @@
 import Link from "next/link";
 import Head from "next/head";
-import Header from "@/components/common/header";
-import Footer from "@/components/common/footer";
+import Header from "@/components/common/Header";
+import Footer from "@/components/common/Footer";
 import NoAccessErrorPage from "@/components/errors/NoAccessErrorPage";
-import LoadingCircle from "@/components/common/loadingcircle";
+import LoadingCircle from "@/components/common/LoadingCircle";
 import { UserCircleIcon } from "@heroicons/react/outline";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";

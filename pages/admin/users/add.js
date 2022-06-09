@@ -1,4 +1,4 @@
-import AdminLayout from "@/components//layouts/adminlayout";
+import AdminLayout from "@/components/layouts/AdminLayout";
 import Link from "next/link";
 
 export async function getStaticProps() {

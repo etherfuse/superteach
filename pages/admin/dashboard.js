@@ -1,6 +1,6 @@
-import AdminLayout from "@/components/layouts/adminlayout";
+import AdminLayout from "@/components/layouts/AdminLayout";
 import { useEffect, useState } from "react";
-import LoadingCircle from "@/components/common/loadingcircle";
+import LoadingCircle from "@/components/common/LoadingCircle";
 import axios from "axios";
 
 const AdminDashboardPage = () => {

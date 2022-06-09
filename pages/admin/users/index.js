@@ -1,10 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
-import AdminLayout from "@/components/layouts/adminlayout";
+import AdminLayout from "@/components/layouts/AdminLayout";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import LoadingCircle from "@/components/common/loadingcircle";
+import LoadingCircle from "@/components/common/LoadingCircle";
 import axios from "axios";
-import unixToDate from "@/utils/unixtodate";
+import unixToDate from "@/utils/unixToDate";
 
 const AdminUsersPage = () => {
   const [isInitialLoading, setIsInitialLoading] = useState(true);

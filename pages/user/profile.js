@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
-import AccountLayout from "@/components/layouts/accountlayout";
-import LoadingCircle from "@/components/common/loadingcircle";
+import AccountLayout from "@/components/layouts/AccountLayout";
+import LoadingCircle from "@/components/common/LoadingCircle";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
