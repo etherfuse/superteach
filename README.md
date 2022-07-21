@@ -14,8 +14,10 @@ yarn dev
 ## Setup
 
 The Project has several branches depending of the starter point that you need. <br/>
-Main branch is the simplest and it should be fine for static simple websites.<br/><br/>
-For a simple Website you should configure: <br/>
 
-- Seo, Header and Footer Components <br/>
-- Logo, OG and favicon images
+- Main Branch is the most advanced and is the default one.
+  It has mongodb, tailwind, daisyui, and users + dashboard + admin.
+  Check .env.example for the configuration.
+
+- Landing for simple landing pages
+- Wmongodb it doesn't have auth or dashboard, only mongodb connected
