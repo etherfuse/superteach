@@ -92,7 +92,7 @@ const Header = () => {
                                 "block px-4 py-2 text-sm text-gray-700"
                               )}
                             >
-                              My Account
+                              Mi Cuenta
                             </a>
                           </Link>
                         )}
@@ -124,7 +124,7 @@ const Header = () => {
                             )}
                             onClick={() => signOut()}
                           >
-                            Log Out
+                            Salir
                           </div>
                         )}
                       </Menu.Item>

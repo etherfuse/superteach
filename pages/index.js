@@ -32,8 +32,8 @@ export default function Home({ isConnected }) {
           </h1>
           <br />
           <div className="connectioncontainer">
-            <p className="font-bold">
-              Connected to mongodb database: {isConnected ? "TRUE" : "FALSE"}{" "}
+            <p className="font-bold ">
+              Conectado a MONGODB: {isConnected ? "YES 🙌" : "ÑO 😢"}{" "}
             </p>
           </div>
         </div>

@@ -35,7 +35,7 @@ const AdminUsersPage = () => {
               <div className="bg-white py-6  space-y-6 ">
                 <div className="flex justify-between px-8 w-full items-center ">
                   <h3 className="text-lg leading-6 font-medium text-gray-900">
-                    Users
+                    Usuarios
                   </h3>
 
                   <Link href="/admin/users/add" passHref>
@@ -43,7 +43,7 @@ const AdminUsersPage = () => {
                       type="button"
                       className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >
-                      Add User
+                      Nuevo Usuario
                     </button>
                   </Link>
                 </div>
@@ -57,7 +57,7 @@ const AdminUsersPage = () => {
                       ) : fetchError ? (
                         <div className="py-24 text-center">
                           <p className="bold text-red-500">
-                            An error ocurred trying to get users 😢
+                            ocurrió un error trayendo los usuarios 😢
                           </p>
                         </div>
                       ) : users && users.length > 0 ? (
@@ -69,25 +69,25 @@ const AdminUsersPage = () => {
                                   scope="col"
                                   className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                                 >
-                                  Name
+                                  Nombre
                                 </th>
 
                                 <th
                                   scope="col"
                                   className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                                 >
-                                  Last Login
+                                  Último acceso
                                 </th>
 
                                 <th
                                   scope="col"
                                   className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                                 >
-                                  Role
+                                  Roles
                                 </th>
 
                                 <th scope="col" className="relative px-6 py-3">
-                                  <span className="sr-only">Show</span>
+                                  <span className="sr-only">Mostrar</span>
                                 </th>
                               </tr>
                             </thead>
@@ -132,7 +132,7 @@ const AdminUsersPage = () => {
                                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                     <Link href={`/admin/users/${user._id}`}>
                                       <a className="text-indigo-600 hover:text-indigo-900">
-                                        Show
+                                        Mostrar
                                       </a>
                                     </Link>
                                   </td>
@@ -144,7 +144,7 @@ const AdminUsersPage = () => {
                       ) : (
                         <div className="py-24 text-center">
                           <p className="bold text-red-500">
-                            Theres no users 😢
+                            No hay usuarios 😢
                           </p>
                         </div>
                       )}

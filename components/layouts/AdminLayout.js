@@ -7,7 +7,7 @@ import LoadingCircle from "@/components/common/LoadingCircle";
 import classNames from "@/utils/classNames";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
-import { HomeIcon, UserIcon } from "@heroicons/react/outline";
+import { ChartBarIcon, UsersIcon } from "@heroicons/react/outline";
 
 const AdminLayout = ({ title, children, ...props }) => {
   const router = useRouter();
@@ -17,13 +17,13 @@ const AdminLayout = ({ title, children, ...props }) => {
     {
       name: "Dashboard",
       href: "/admin/dashboard",
-      icon: HomeIcon,
+      icon: ChartBarIcon,
       current: false,
     },
     {
-      name: "Users",
+      name: "Usuarios",
       href: "/admin/users",
-      icon: UserIcon,
+      icon: UsersIcon,
       current: false,
     },
   ];
@@ -60,6 +60,9 @@ const AdminLayout = ({ title, children, ...props }) => {
             <div className="max-w-7xl w-full py-6 sm:px-6  ">
               <div className="lg:grid lg:grid-cols-12 lg:gap-x-5">
                 <aside className="py-6 px-2 sm:px-6 lg:py-0 lg:px-0 lg:col-span-2">
+                  <div className="layouttitle  w-full flex items-center justify-start pb-2">
+                    <p className="font-bold">Administrador</p>
+                  </div>
                   <nav className="space-y-1">
                     {navigation.map((item) => {
                       if (item.href === router.pathname) {

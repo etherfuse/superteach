@@ -4,20 +4,20 @@ import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
 import NoAccessErrorPage from "@/components/errors/NoAccessErrorPage";
 import LoadingCircle from "@/components/common/LoadingCircle";
-import { UserCircleIcon } from "@heroicons/react/outline";
+import { CogIcon } from "@heroicons/react/outline";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import classNames from "@/utils/classNames";
 
-const AccountLayout = ({ children, ...props }) => {
+const AccountLayout = ({ title, children, ...props }) => {
   const router = useRouter();
   const { status } = useSession();
 
   const navigation = [
     {
-      name: "My Account",
+      name: "Configuración",
       href: "/user/profile",
-      icon: UserCircleIcon,
+      icon: CogIcon,
       current: false,
     },
   ];
@@ -37,6 +37,7 @@ const AccountLayout = ({ children, ...props }) => {
   return (
     <>
       <Head>
+        <title>{title ? `Mi Cuenta | ${title}` : "Mi Cuenta"}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -47,6 +48,9 @@ const AccountLayout = ({ children, ...props }) => {
             <div className="max-w-7xl w-full py-6 sm:px-6  ">
               <div className="lg:grid lg:grid-cols-12 lg:gap-x-5">
                 <aside className="py-6 px-2 sm:px-6 lg:py-0 lg:px-0 lg:col-span-3">
+                  <div className="layouttitle  w-full flex items-center justify-start pb-2">
+                    <p className="font-bold">Mi Cuenta</p>
+                  </div>
                   <nav className="space-y-1">
                     {navigation.map((item) => {
                       if (item.href === router.pathname) {

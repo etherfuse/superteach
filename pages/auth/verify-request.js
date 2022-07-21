@@ -5,10 +5,9 @@ const VerifyRequestPage = () => {
     <div className="min-h-full w-full">
       <div className="flex-1 h-full flex justify-center items-center flex-col py-12 px-4 sm:px-6  lg:px-20 xl:px-24">
         <div className="message my-4 flex justify-center flex-col items-center">
-          <p className="font-bold">We sent an email to you 🙌</p>
+          <p className="font-bold">Te Hemos Mandado un Email 🙌</p>
           <p>
-            Click in the link that we sent you to your email address in order to
-            log in
+            Da click en el link que te enviamos a tu email para iniciar sesión.
           </p>
         </div>
       </div>
