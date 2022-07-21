@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import LoadingCircle from "@/components/common/LoadingCircle";
 import axios from "axios";
 import { useRouter } from "next/router";
-import unixToDate from "@/utils/unixToDate";
+import { unixToFormat } from "@/utils/dates";
 
 const AdminUsersShowPage = () => {
   const [isInitialLoading, setIsInitialLoading] = useState(true);
@@ -19,7 +19,6 @@ const AdminUsersShowPage = () => {
       setIsInitialLoading(true);
       try {
         const { data } = await axios.get(`/api/admin/users/${id}`);
-        console.log("data: ", data);
         setUser(data);
         setFetchError(false);
       } catch (err) {
@@ -39,7 +38,7 @@ const AdminUsersShowPage = () => {
               <div className="bg-white py-6 space-y-6 ">
                 <div className="flex justify-between px-8 w-full items-center ">
                   <h3 className="text-lg leading-6 font-medium text-gray-900">
-                    User Detail
+                    Detalle de Usuario
                   </h3>
 
                   <Link href="/admin/users" passHref>
@@ -47,7 +46,7 @@ const AdminUsersShowPage = () => {
                       type="button"
                       className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >
-                      Back to Users List
+                      Volver a Usuarios
                     </button>
                   </Link>
                 </div>
@@ -61,7 +60,7 @@ const AdminUsersShowPage = () => {
                       ) : fetchError ? (
                         <div className="py-24 text-center">
                           <p className="bold text-red-500">
-                            An Error ocurred loading user info 😢
+                            Ocurrio un error trayendo el usuario 😢
                           </p>
                         </div>
                       ) : user ? (
@@ -93,26 +92,35 @@ const AdminUsersShowPage = () => {
                             <dl className="grid grid-cols-1 gap-x-2 gap-y-4 sm:grid-cols-3">
                               <div className="sm:col-span-1">
                                 <dt className="text-sm font-medium text-gray-500">
-                                  Created At
+                                  Creado en
                                 </dt>
                                 <dd className="mt-1 text-sm text-gray-900">
-                                  {unixToDate(user.createdAt)}
+                                  {unixToFormat(
+                                    user.createdAt,
+                                    "dd/mm/yyyy hh:mm aaa"
+                                  )}
                                 </dd>
                               </div>
                               <div className="sm:col-span-1">
                                 <dt className="text-sm font-medium text-gray-500">
-                                  Updated At
+                                  Actualizado en
                                 </dt>
                                 <dd className="mt-1 text-sm text-gray-900">
-                                  {unixToDate(user.updatedAt)}
+                                  {unixToFormat(
+                                    user.updatedAt,
+                                    "dd/mm/yyyy hh:mm aaa"
+                                  )}
                                 </dd>
                               </div>
                               <div className="sm:col-span-1">
                                 <dt className="text-sm font-medium text-gray-500">
-                                  Last Login
+                                  Último acceso
                                 </dt>
                                 <dd className="mt-1 text-sm text-gray-900">
-                                  {unixToDate(user.lastLogin)}
+                                  {unixToFormat(
+                                    user.lastLogin,
+                                    "dd/mm/yyyy hh:mm aaa"
+                                  )}
                                 </dd>
                               </div>
                               <div className="sm:col-span-1">

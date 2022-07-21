@@ -2,7 +2,7 @@ import NextAuth from "next-auth";
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import EmailProvider from "next-auth/providers/email";
 import clientPromise from "@/lib/mongodb";
-import dateNowUnix from "@/utils/dateNowUnix";
+import { dateNowUnix } from "@/utils/dates";
 import nodemailer from "nodemailer";
 import html from "@/emailtemplates/verify-email";
 

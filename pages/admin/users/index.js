@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import LoadingCircle from "@/components/common/LoadingCircle";
 import axios from "axios";
-import unixToDate from "@/utils/unixToDate";
+import { unixToDate, unixToFormat } from "@/utils/dates";
 
 const AdminUsersPage = () => {
   const [isInitialLoading, setIsInitialLoading] = useState(true);
@@ -110,7 +110,7 @@ const AdminUsersPage = () => {
                                         <div className="text-sm font-medium text-gray-900 capitalize">
                                           {user.name
                                             ? user.name
-                                            : "Name not assigned"}
+                                            : "Sin Nombre Asignado"}
                                         </div>
                                         <div className="text-sm text-gray-500">
                                           {user.email}
@@ -120,7 +120,10 @@ const AdminUsersPage = () => {
                                   </td>
 
                                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {unixToDate(user.lastLogin)}
+                                    {unixToFormat(
+                                      user.lastLogin,
+                                      "dd/mm/yyyy hh:mm aaa"
+                                    )}
                                   </td>
 
                                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">

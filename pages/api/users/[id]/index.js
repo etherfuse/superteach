@@ -1,7 +1,7 @@
 //USERS API ROUTE for logged in users
 import nc from "next-connect";
 import clientPromise from "@/lib/mongodb";
-import dateNowUnix from "@/utils/dateNowUnix";
+import { dateNowUnix } from "@/utils/dates";
 import getCloudinary from "@/config/cloudinary";
 import parsemultiPartyForm from "@/utils/parseMultiPartyForm";
 const multer = require("multer");

@@ -14,7 +14,7 @@ const SignInPage = ({ providers, csrfToken, errorMessage }) => {
           <div className="mx-auto w-full max-w-sm lg:w-96">
             <div>
               <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
-                Sign Up
+                Iniciar Sesión
               </h2>
             </div>
 
@@ -30,7 +30,7 @@ const SignInPage = ({ providers, csrfToken, errorMessage }) => {
                       htmlFor="email"
                       className="block text-sm font-medium text-gray-700"
                     >
-                      Email Address
+                      Email
                     </label>
                     <div className="mt-1">
                       <input
@@ -59,7 +59,7 @@ const SignInPage = ({ providers, csrfToken, errorMessage }) => {
                       type="submit"
                       className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >
-                      Sign Up with email
+                      Iniciar Sesión
                     </button>
                   </div>
                 </form>

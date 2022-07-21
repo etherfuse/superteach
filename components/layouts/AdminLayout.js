@@ -8,6 +8,7 @@ import classNames from "@/utils/classNames";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { ChartBarIcon, UsersIcon } from "@heroicons/react/outline";
+import toast, { Toaster } from "react-hot-toast";
 
 const AdminLayout = ({ title, children, ...props }) => {
   const router = useRouter();
@@ -54,6 +55,9 @@ const AdminLayout = ({ title, children, ...props }) => {
       </Head>
 
       <div className="min-h-full h-full">
+        {/* to show errors and success alerts  */}
+        <Toaster position="bottom-center" />
+
         <div className="flex flex-col w-full bg-gray-100 " {...props}>
           <Header />
           <div className="w-full max-w-7xl  mx-auto  ">
