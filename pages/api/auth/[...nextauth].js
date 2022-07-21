@@ -95,8 +95,8 @@ const sendVerificationEmail = async (transport, email, from, url, host) => {
     await transport.sendMail({
       to: email,
       from,
-      subject: `Log In in  ${host}`,
-      text: `Log in in ${host}`,
+      subject: `Inicia Sesión en ${host}`,
+      text: `Inicia Sesión en ${host}`,
       html: html({ url, host, email }),
     });
     console.log("Verification email sent to:", email);
