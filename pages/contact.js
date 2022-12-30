@@ -126,7 +126,7 @@ const ContactPage = () => {
                     {...register("firstName", {
                       required: {
                         value: true,
-                        message: "First Name is required",
+                        message: "Nombre es requerido",
                       },
                     })}
                   />
@@ -154,7 +154,7 @@ const ContactPage = () => {
                     {...register("lastName", {
                       required: {
                         value: true,
-                        message: "Last Name is required",
+                        message: "Apellido es requerido",
                       },
                     })}
                   />

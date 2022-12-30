@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import toast, { Toaster } from "react-hot-toast";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import { Input } from "@/components/forms/fields";
 
 const ProfilePage = () => {
   const {
@@ -106,46 +107,32 @@ const ProfilePage = () => {
                 ) : (
                   <div className="grid grid-cols-6 gap-6">
                     <div className="col-span-6 sm:col-span-3">
-                      <label
-                        htmlFor="name"
-                        className="block text-sm font-medium text-gray-700"
-                      >
-                        Nombre Completo
-                      </label>
-                      <input
+                      <Input
+                        label="Nombre Completo"
                         type="text"
                         name="name"
                         id="name"
-                        autoComplete="given-name"
-                        className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        {...register("name", {
-                          required: {
-                            value: true,
-                            message: "Name is required",
-                          },
-                        })}
+                        register={{
+                          ...register("name", {
+                            required: {
+                              value: true,
+                              message: "Nombre es requerido",
+                            },
+                          }),
+                        }}
+                        errorMessage={errors.name && errors.name.message}
                       />
-                      {errors.name && (
-                        <div className="mt-3 text-sm text-red-600">
-                          {errors.name.message}
-                        </div>
-                      )}
 
                       <div className="my-4">
-                        <label
-                          htmlFor="email"
-                          className="block text-sm font-medium text-gray-700"
-                        >
-                          Email
-                        </label>
-                        <input
+                        <Input
                           type="text"
                           name="email"
                           id="email"
+                          label="Email"
                           disabled
                           autoComplete="email"
                           className="text-gray-500 cursor-not-allowed mt-1 bg-gray-100 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                          {...register("email")}
+                          register={{ ...register("email") }}
                         />
                       </div>
                     </div>
@@ -199,7 +186,7 @@ const ProfilePage = () => {
                 <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
                   <button
                     type="submit"
-                    className="bg-indigo-600 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    className="bg-buttonbg border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-buttontxt  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-buttonbg"
                   >
                     {isLoading ? <LoadingCircle /> : "Actualizar"}
                   </button>

@@ -23,7 +23,6 @@ const AdminUsersAddPage = () => {
   const {
     register,
     handleSubmit,
-    watch,
     setError,
     clearErrors,
     formState: { errors },
@@ -87,7 +86,7 @@ const AdminUsersAddPage = () => {
                   <Link href="/admin/users" passHref>
                     <button
                       type="button"
-                      className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                      className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-buttonbg hover:bg-buttonbg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-inputfocus"
                     >
                       Regresar a Usuarios
                     </button>
@@ -162,7 +161,7 @@ const AdminUsersAddPage = () => {
                           <div className="mt-4">
                             <button
                               type="submit"
-                              className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-happy-yellow-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                              className="inline-flex justify-center rounded-md border border-transparent bg-inputfocus px-4 py-2 text-sm font-medium text-white hover:bg-happy-yellow-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-inputfocus focus-visible:ring-offset-2"
                               disabled={isLoading}
                             >
                               <div className="loadingcontainer flex justify-center items-center w-full">
