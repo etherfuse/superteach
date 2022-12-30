@@ -97,7 +97,7 @@ const AdminUsersShowPage = () => {
                                 <dd className="mt-1 text-sm text-gray-900">
                                   {unixToFormat(
                                     user.createdAt,
-                                    "dd/mm/yyyy hh:mm aaa"
+                                    "PP -  hh:mm aaa"
                                   )}
                                 </dd>
                               </div>
@@ -108,7 +108,7 @@ const AdminUsersShowPage = () => {
                                 <dd className="mt-1 text-sm text-gray-900">
                                   {unixToFormat(
                                     user.updatedAt,
-                                    "dd/mm/yyyy hh:mm aaa"
+                                    "PP -  hh:mm aaa"
                                   )}
                                 </dd>
                               </div>
@@ -119,7 +119,7 @@ const AdminUsersShowPage = () => {
                                 <dd className="mt-1 text-sm text-gray-900">
                                   {unixToFormat(
                                     user.lastLogin,
-                                    "dd/mm/yyyy hh:mm aaa"
+                                    "PP -  hh:mm aaa"
                                   )}
                                 </dd>
                               </div>

@@ -120,10 +120,7 @@ const AdminUsersPage = () => {
                                   </td>
 
                                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {unixToFormat(
-                                      user.lastLogin,
-                                      "dd/mm/yyyy hh:mm aaa"
-                                    )}
+                                    {unixToFormat(user.lastLogin, "PPP")}
                                   </td>
 
                                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
