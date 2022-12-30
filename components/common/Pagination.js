@@ -78,7 +78,7 @@ const Pagination = ({ paginationData, setPage }) => {
             <button
               className={`${
                 page === totalPages && " cursor-not-allowed"
-              } relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50`}
+              } relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50`}
               disabled={page === totalPages}
               onClick={() => {
                 setPage(page + 1);
