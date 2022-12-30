@@ -4,18 +4,41 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import LoadingCircle from "@/components/common/LoadingCircle";
 import axios from "axios";
+import Pagination from "@/components/common/Pagination";
 import { unixToFormat } from "@/utils/dates";
 
 const AdminUsersPage = () => {
   const [isInitialLoading, setIsInitialLoading] = useState(true);
   const [fetchError, setFetchError] = useState(false);
   const [users, setUsers] = useState(undefined);
+
+  const [page, setPage] = useState(1);
+  const [paginationData, setPaginationData] = useState({});
+
+  const pageSize = 20;
+  const sortBy = "createdAt";
+  const orderBy = "desc";
+
+  useEffect(() => {
+    setPage(1);
+  }, []);
+
   useEffect(() => {
     async function getUsers() {
       setIsInitialLoading(true);
       try {
-        const { data } = await axios.get(`/api/admin/users/`);
-        setUsers(data);
+        const { data } = await axios.get(
+          `/api/admin/users/?page=${page}&limit=${pageSize}&sort=${sortBy}&order=${orderBy}`
+        );
+        const { users, count, totalPages } = data;
+
+        setUsers(users);
+        setPaginationData({
+          page,
+          pageSize: users.length,
+          totalPages,
+          totalCount: count,
+        });
         setFetchError(false);
       } catch (err) {
         setFetchError(true);
@@ -24,7 +47,7 @@ const AdminUsersPage = () => {
     }
 
     getUsers();
-  }, []);
+  }, [page]);
 
   return (
     <AdminLayout title="Usuarios">
@@ -43,7 +66,7 @@ const AdminUsersPage = () => {
                       type="button"
                       className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-buttontxt bg-buttonbg hover:bg-buttonbg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-buttonbg"
                     >
-                      Nuevo Usuario
+                      Agregar Usuario
                     </button>
                   </Link>
                 </div>
@@ -57,7 +80,7 @@ const AdminUsersPage = () => {
                       ) : fetchError ? (
                         <div className="py-24 text-center">
                           <p className="bold text-red-500">
-                            ocurrió un error trayendo los usuarios 😢
+                            An error ocurred trying to get users 😢
                           </p>
                         </div>
                       ) : users && users.length > 0 ? (
@@ -76,14 +99,14 @@ const AdminUsersPage = () => {
                                   scope="col"
                                   className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                                 >
-                                  Último acceso
+                                  Ultimo Inicio
                                 </th>
 
                                 <th
                                   scope="col"
                                   className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                                 >
-                                  Roles
+                                  Rol
                                 </th>
 
                                 <th scope="col" className="relative px-6 py-3">
@@ -110,7 +133,7 @@ const AdminUsersPage = () => {
                                         <div className="text-sm font-medium text-gray-900 capitalize">
                                           {user.name
                                             ? user.name
-                                            : "Sin Nombre Asignado"}
+                                            : "Name not assigned"}
                                         </div>
                                         <div className="text-sm text-gray-500">
                                           {user.email}
@@ -120,7 +143,10 @@ const AdminUsersPage = () => {
                                   </td>
 
                                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {unixToFormat(user.lastLogin, "PPP")}
+                                    {unixToFormat(
+                                      user.lastLogin,
+                                      "PP -  hh:mm aaa"
+                                    )}
                                   </td>
 
                                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
@@ -140,11 +166,15 @@ const AdminUsersPage = () => {
                               ))}
                             </tbody>
                           </table>
+                          <Pagination
+                            paginationData={paginationData}
+                            setPage={setPage}
+                          />
                         </div>
                       ) : (
                         <div className="py-24 text-center">
                           <p className="bold text-red-500">
-                            No hay usuarios 😢
+                            No hay Usuarios 😢
                           </p>
                         </div>
                       )}

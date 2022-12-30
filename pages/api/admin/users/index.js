@@ -25,15 +25,43 @@ handler.use(async (req, res, next) => {
 //GET USERS
 handler.get(async (req, res) => {
   const db = req.db;
-  //get all users sorted by newest
+  const { page, sort, order, limit, role } = req.query;
+
+  if (!page || !sort || !order || !limit) {
+    console.error("You need to provide page, sort and order query params");
+    res
+      .status(400)
+      .end("You need to provide page, sort and order query params");
+    return;
+  }
 
   const users = await db
     .collection("users")
-    .find()
-    .sort({ createdAt: -1 })
+    .aggregate([
+      {
+        $match: {},
+      },
+      {
+        $sort: {
+          [sort]: order === "asc" ? 1 : -1,
+        },
+      },
+      {
+        $skip: (Number(page) - 1) * Number(limit),
+      },
+      {
+        $limit: Number(limit),
+      },
+    ])
     .toArray();
 
-  res.json(users);
+  const usersCount = await db.collection("users").countDocuments();
+
+  res.json({
+    users,
+    count: usersCount,
+    totalPages: Math.ceil(usersCount / limit),
+  });
 });
 
 //ADDS USER
