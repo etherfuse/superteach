@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import LoadingCircle from "@/components/common/LoadingCircle";
 import axios from "axios";
-import { unixToDate, unixToFormat } from "@/utils/dates";
+import { unixToFormat } from "@/utils/dates";
 
 const AdminUsersPage = () => {
   const [isInitialLoading, setIsInitialLoading] = useState(true);
