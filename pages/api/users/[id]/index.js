@@ -79,7 +79,7 @@ handler.put(async (req, res) => {
           const userImageUpload = await cloudinary.uploader.upload(
             userImage[0].path,
             {
-              folder: `users_${process.env.NODE_ENV}`,
+              folder: `${process.env.NEXT_PUBLIC_CLOUDINARY_PROJECT}_${process.env.NODE_ENV}/users`,
               public_id: `${id}/profile`,
               overwrite: true,
               width: 250,
