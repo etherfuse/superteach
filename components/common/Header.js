@@ -31,10 +31,8 @@ const Header = ({ fixed = false }) => {
         {/* DESKTOP */}
         <div className="max-w-7xl mx-auto flex justify-between items-center px-4 py-5 sm:px-6 sm:py-4 lg:px-8 md:justify-start md:space-x-10 ">
           <div>
-            <Link href="/">
-              <a className="flex">
-                <img className="h-8 w-auto sm:h-10" src={logoUrl} alt="" />
-              </a>
+            <Link href="/" className="flex">
+              <img className="h-8 w-auto sm:h-10" src={logoUrl} alt="" />
             </Link>
           </div>
           <div className="flex space-x-2 -mr-2 -my-2 md:hidden">
@@ -50,10 +48,12 @@ const Header = ({ fixed = false }) => {
           <div className="hidden md:flex-1 md:flex md:items-center md:justify-between">
             <Popover.Group as="nav" className="flex space-x-10">
               {navigation.pages.map((page) => (
-                <Link key={page.name} href={page.href}>
-                  <a className="text-base font-medium text-gray-700">
-                    {page.name}
-                  </a>
+                <Link
+                  key={page.name}
+                  href={page.href}
+                  className="text-base font-medium text-gray-700"
+                >
+                  {page.name}
                 </Link>
               ))}
             </Popover.Group>
@@ -64,11 +64,9 @@ const Header = ({ fixed = false }) => {
           {session ? null : (
             <div className="linkcontainer hidden md:block ">
               <Link href="/auth/signin">
-                <a>
-                  <button className="text-normal font-semibold bg-buttonbg text-buttontxt  px-2 py-1 rounded-md  ">
-                    Iniciar Sesión
-                  </button>
-                </a>
+                <button className="text-normal font-semibold bg-buttonbg text-buttontxt  px-2 py-1 rounded-md  ">
+                  Iniciar Sesión
+                </button>
               </Link>
             </div>
           )}
@@ -94,10 +92,8 @@ const Header = ({ fixed = false }) => {
               <div className="flex items-center justify-between">
                 <div>
                   <Link href="/">
-                    <a>
-                      {" "}
-                      <img className="h-8 w-auto" src={logoUrl} alt="logo" />
-                    </a>
+                    {" "}
+                    <img className="h-8 w-auto" src={logoUrl} alt="logo" />
                   </Link>
                 </div>
                 <div className="-mr-2">
@@ -110,19 +106,19 @@ const Header = ({ fixed = false }) => {
             <div className="py-6 px-5 bg-happy-pink-600">
               <div className="grid grid-cols-1 gap-4 gap-y-8">
                 {navigation.pages.map((page) => (
-                  <Link key={page.name} href={page.href}>
-                    <a className="rounded-md text-base font-medium text-gray-500">
-                      {page.name}
-                    </a>
+                  <Link
+                    key={page.name}
+                    href={page.href}
+                    className="rounded-md text-base font-medium text-gray-500"
+                  >
+                    {page.name}
                   </Link>
                 ))}
                 {session ? null : (
                   <Link href="/auth/signin">
-                    <a>
-                      <button className="text-normal font-semibold bg-buttonbg  text-buttontxt px-2 py-1 rounded-md  ">
-                        Iniciar Sesión
-                      </button>
-                    </a>
+                    <button className="text-normal font-semibold bg-buttonbg  text-buttontxt px-2 py-1 rounded-md  ">
+                      Iniciar Sesión
+                    </button>
                   </Link>
                 )}
               </div>
@@ -169,15 +165,14 @@ const SessionMenu = ({ session }) => {
             <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-40">
               <Menu.Item>
                 {({ active }) => (
-                  <Link href="/user/profile">
-                    <a
-                      className={classNames(
-                        active ? "bg-gray-100" : "",
-                        "block px-4 py-2 text-sm text-gray-700"
-                      )}
-                    >
-                      Mi Cuenta
-                    </a>
+                  <Link
+                    href="/user/profile"
+                    className={classNames(
+                      active ? "bg-gray-100" : "",
+                      "block px-4 py-2 text-sm text-gray-700"
+                    )}
+                  >
+                    Mi Cuenta
                   </Link>
                 )}
               </Menu.Item>
@@ -185,15 +180,14 @@ const SessionMenu = ({ session }) => {
               {session.user.roles.includes("organizer") && (
                 <Menu.Item>
                   {({ active }) => (
-                    <Link href="/organizer/events">
-                      <a
-                        className={classNames(
-                          active ? "bg-gray-100" : "",
-                          "block px-4 py-2 text-sm text-gray-700"
-                        )}
-                      >
-                        Dashboard
-                      </a>
+                    <Link
+                      href="/organizer/events"
+                      className={classNames(
+                        active ? "bg-gray-100" : "",
+                        "block px-4 py-2 text-sm text-gray-700"
+                      )}
+                    >
+                      Dashboard
                     </Link>
                   )}
                 </Menu.Item>
@@ -202,15 +196,14 @@ const SessionMenu = ({ session }) => {
               {session.user.roles.includes("admin") && (
                 <Menu.Item>
                   {({ active }) => (
-                    <Link href="/admin/dashboard">
-                      <a
-                        className={classNames(
-                          active ? "bg-gray-100" : "",
-                          "block px-4 py-2 text-sm text-gray-700"
-                        )}
-                      >
-                        Admin Dashboard
-                      </a>
+                    <Link
+                      href="/admin/dashboard"
+                      className={classNames(
+                        active ? "bg-gray-100" : "",
+                        "block px-4 py-2 text-sm text-gray-700"
+                      )}
+                    >
+                      Admin Dashboard
                     </Link>
                   )}
                 </Menu.Item>
