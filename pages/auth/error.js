@@ -44,7 +44,7 @@ const AuthErrorPage = () => {
           className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-buttontxt bg-buttonbg hover:bg-buttonbg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-buttonbg"
         >
           <Link href="/auth/signin">
-            <a>Iniciar Sesión</a>
+            Iniciar Sesión
           </Link>
         </button>
       </div>

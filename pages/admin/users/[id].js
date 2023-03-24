@@ -41,7 +41,7 @@ const AdminUsersShowPage = () => {
                     Detalle de Usuario
                   </h3>
 
-                  <Link href="/admin/users" passHref>
+                  <Link href="/admin/users" passHref legacyBehavior>
                     <button
                       type="button"
                       className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-buttonbg hover:bg-buttonbg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-buttontxt"
