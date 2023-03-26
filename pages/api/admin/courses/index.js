@@ -96,7 +96,7 @@ handler.post(async (req, res) => {
       lower: true,
     });
 
-    //check if course exists
+    //check if course with that slug exists
     const courseExists = await db.collection("courses").findOne({ slug });
 
     if (courseExists) {

@@ -28,9 +28,9 @@ const CourseForm = ({ type = "new" }) => {
   const [course, setCourse] = useState(null);
 
   useEffect(() => {
-    const getCourseData = async (slug) => {
+    const getCourseData = async (courseId) => {
       try {
-        const { data } = await axios.get(`/api/admin/courses/${slug}`);
+        const { data } = await axios.get(`/api/admin/courses/${courseId}`);
 
         setCourse(data);
         reset(data);
@@ -40,9 +40,9 @@ const CourseForm = ({ type = "new" }) => {
       }
     };
 
-    if (type === "edit" && router?.query?.slug) {
+    if (type === "edit" && router?.query?.courseId) {
       //print the data inside the fields
-      getCourseData(router.query.slug);
+      getCourseData(router.query.courseId);
     }
   }, [router]);
 
@@ -66,7 +66,7 @@ const CourseForm = ({ type = "new" }) => {
 
       //check if edit or new
       if (type === "edit") {
-        url = `/api/admin/courses/${router.query.slug}`;
+        url = `/api/admin/courses/${router?.query?.courseId}`;
         await axios.put(url, formData, { headers });
       } else {
         url = "/api/admin/courses/";

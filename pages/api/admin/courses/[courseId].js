@@ -7,6 +7,7 @@ import dateNowUnix from "@/utils/dates/dateNowUnix"; // this is for getting the 
 import ncoptions from "@/utils/ncoptions";
 import getCloudinary from "@/utils/getCloudinary"; // this is for getting the cloudinary configuration
 import parsemultiPartyForm from "@/utils/parsemultipartyform"; // this is for parsing the form data
+import { ObjectId } from "mongodb"; // this is for converting strings to ObjectIds
 
 const handler = nc(ncoptions); // this is for handling requests middleware
 const upload = multer({ dest: "/tmp" });
@@ -38,15 +39,17 @@ handler.use(async (req, res, next) => {
 
 //GET SPECIFIC COURSE
 handler.get(async (req, res) => {
-  const slug = req?.query?.slug;
-  if (!slug) {
-    res.status(400).end("No slug provided");
+  const { courseId } = req.query;
+  if (!courseId) {
+    res.status(400).end("No course id provided");
     return;
   }
 
   try {
     //get course from db
-    const course = await req.db.collection("courses").findOne({ slug });
+    const course = await req.db
+      .collection("courses")
+      .findOne({ _id: ObjectId(courseId) });
     res.status(200).json(course);
   } catch (error) {
     console.error(error);
@@ -57,10 +60,11 @@ handler.get(async (req, res) => {
 //UPDATE COURSE
 handler.put(async (req, res) => {
   const db = req.db;
-  const { slug } = req.query;
+  const { courseId } = req.query;
+
   const { name, description, isPublic } = req.body;
-  if (!slug) {
-    res.status(400).end("No course slug provided");
+  if (!courseId) {
+    res.status(400).end("No course id provided");
     return;
   }
 
@@ -73,12 +77,16 @@ handler.put(async (req, res) => {
 
   try {
     //check if course exists
-    const course = await db.collection("courses").findOne({ slug });
+    const course = await db
+      .collection("courses")
+      .findOne({ _id: ObjectId(courseId) });
 
     if (!course) {
       res.status(404).end("Course not found");
       return;
     }
+
+    const { slug } = course;
 
     //Check files
     if (req.files) {
@@ -111,7 +119,7 @@ handler.put(async (req, res) => {
 
     //update course
     const courseUpdated = await db.collection("courses").findOneAndUpdate(
-      { slug }, //filter
+      { _id: ObjectId(courseId) }, //filter
       { $set: courseNewData }, //update
       { returnOriginal: false } //return updated document
     );

@@ -75,7 +75,7 @@ const AdminCourseLessons = () => {
                       </button>
                     </Link>
                     <Link
-                      href={`/admin/courses/${router?.query?.slug}/lessons/add`}
+                      href={`/admin/courses/${router?.query?._id}/lessons/add`}
                       passHref
                       legacyBehavior
                     >
