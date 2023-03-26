@@ -51,7 +51,7 @@ const AdminCoursesPage = () => {
   }, [page]);
 
   return (
-    <AdminLayout title="Cursos">
+    <AdminLayout title="Courses">
       <div className="w-full flex justify-center">
         <div className="relative bg-white w-full ">
           <div>

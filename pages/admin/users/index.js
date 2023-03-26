@@ -50,7 +50,7 @@ const AdminUsersPage = () => {
   }, [page]);
 
   return (
-    <AdminLayout title="Usuarios">
+    <AdminLayout title="Users">
       <div className="w-full flex justify-center">
         <div className="relative bg-white w-full ">
           <div>
@@ -58,7 +58,7 @@ const AdminUsersPage = () => {
               <div className="bg-white py-6  space-y-6 ">
                 <div className="flex justify-between px-8 w-full items-center ">
                   <h3 className="text-lg leading-6 font-medium text-gray-900">
-                    Usuarios
+                    Users
                   </h3>
 
                   <Link href="/admin/users/add" passHref legacyBehavior>
@@ -66,7 +66,7 @@ const AdminUsersPage = () => {
                       type="button"
                       className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-buttontxt bg-buttonbg hover:bg-buttonbg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-buttonbg"
                     >
-                      Agregar Usuario
+                      Create User
                     </button>
                   </Link>
                 </div>
@@ -92,25 +92,25 @@ const AdminUsersPage = () => {
                                   scope="col"
                                   className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                                 >
-                                  Nombre
+                                  Name
                                 </th>
 
                                 <th
                                   scope="col"
                                   className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                                 >
-                                  Ultimo Inicio
+                                  Last Login
                                 </th>
 
                                 <th
                                   scope="col"
                                   className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                                 >
-                                  Rol
+                                  Role
                                 </th>
 
                                 <th scope="col" className="relative px-6 py-3">
-                                  <span className="sr-only">Mostrar</span>
+                                  <span className="sr-only">Show</span>
                                 </th>
                               </tr>
                             </thead>
@@ -158,10 +158,9 @@ const AdminUsersPage = () => {
                                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                     <Link
                                       href={`/admin/users/${user._id}`}
-                                      className="text-selectedtxt hover:text-selectedtxt">
-                                      
-                                        Mostrar
-                                      
+                                      className="text-selectedtxt hover:text-selectedtxt"
+                                    >
+                                      Show
                                     </Link>
                                   </td>
                                 </tr>

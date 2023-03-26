@@ -22,7 +22,7 @@ const Select = ({
           defaultValue=""
           {...register}
         >
-          <option value="">Selecciona una opción</option>
+          <option value="">Select an option</option>
           {options.map((option) => (
             <option key={option.value} value={option.value}>
               {option.label}

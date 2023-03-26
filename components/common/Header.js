@@ -172,7 +172,7 @@ const SessionMenu = ({ session }) => {
                       "block px-4 py-2 text-sm text-gray-700"
                     )}
                   >
-                    Mi Cuenta
+                    My Profile
                   </Link>
                 )}
               </Menu.Item>
@@ -218,7 +218,7 @@ const SessionMenu = ({ session }) => {
                     )}
                     onClick={() => signOut()}
                   >
-                    Salir
+                    Sign out
                   </div>
                 )}
               </Menu.Item>

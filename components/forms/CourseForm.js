@@ -11,6 +11,7 @@ import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 import LoadingCircle from "@/components/common/LoadingCircle";
+import classNames from "classnames";
 
 const CourseForm = ({ type = "new" }) => {
   const {
@@ -135,29 +136,35 @@ const CourseForm = ({ type = "new" }) => {
         />
       </div>
 
-      <CoverImage
-        label="Course Image"
-        name="cover"
-        dimensions="Recommended Size: 1920x1080"
-        errorMessage={errors?.photo?.message}
-        defaultValue={course?.cover}
-        register={
-          type === "new"
-            ? {
-                ...register("cover", {
-                  required: {
-                    value: true,
-                    message: "Course image is required",
-                  },
-                }),
-              }
-            : {
-                ...register("cover"),
-              }
-        }
-      />
+      <div className="my-6">
+        <CoverImage
+          label="Course Image"
+          name="cover"
+          dimensions="Recommended Size: 1920x1080"
+          errorMessage={errors?.photo?.message}
+          defaultValue={course?.cover}
+          register={
+            type === "new"
+              ? {
+                  ...register("cover", {
+                    required: {
+                      value: true,
+                      message: "Course image is required",
+                    },
+                  }),
+                }
+              : {
+                  ...register("cover"),
+                }
+          }
+        />
+      </div>
 
-      <div className="inputwrapper my-6">
+      <div
+        className={classNames("inputwrapper my-6", {
+          "my-14": type === "edit",
+        })}
+      >
         <CheckBox
           label="Your course is public ? "
           description="If you select this option, your course will be visible to everyone."

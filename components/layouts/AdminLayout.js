@@ -12,7 +12,7 @@ import {
   ChartBarIcon,
   UsersIcon,
 } from "@heroicons/react/outline";
-import toast, { Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 
 const AdminLayout = ({ title, children, ...props }) => {
   const router = useRouter();
@@ -20,21 +20,21 @@ const AdminLayout = ({ title, children, ...props }) => {
 
   const navigation = [
     {
-      name: "Dashboard",
+      name: "Stats",
       href: "/admin/dashboard",
       icon: ChartBarIcon,
-      current: false,
-    },
-    {
-      name: "Usuarios",
-      href: "/admin/users",
-      icon: UsersIcon,
       current: false,
     },
     {
       name: "Courses",
       href: "/admin/courses",
       icon: BookOpenIcon,
+      current: false,
+    },
+    {
+      name: "Usuarios",
+      href: "/admin/users",
+      icon: UsersIcon,
       current: false,
     },
   ];
@@ -75,7 +75,7 @@ const AdminLayout = ({ title, children, ...props }) => {
               <div className="lg:grid lg:grid-cols-12 lg:gap-x-5">
                 <aside className="py-6 px-2 sm:px-6 lg:py-0 lg:px-0 lg:col-span-2">
                   <div className="layouttitle  w-full flex items-center justify-start pb-2">
-                    <p className="font-bold">Administrador</p>
+                    <p className="font-bold">Admin Dashboard</p>
                   </div>
                   <nav className="space-y-1">
                     {navigation.map((item) => {

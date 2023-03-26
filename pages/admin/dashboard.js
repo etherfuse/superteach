@@ -31,7 +31,7 @@ const AdminDashboardPage = () => {
               <div className="bg-white py-6 px-4 space-y-6 sm:p-6">
                 <div>
                   <h3 className="text-lg leading-6 font-medium text-gray-900">
-                    Estadisticas Totales
+                    Global Stats
                   </h3>
                   <div className="mt-12">
                     <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
@@ -42,7 +42,7 @@ const AdminDashboardPage = () => {
                       ) : fetchError ? (
                         <div className="py-24 text-center">
                           <p className="bold text-red-500">
-                            Ocurrió un error trayendo estadisticas 😢
+                            😢 There was an error fetching the stats
                           </p>
                         </div>
                       ) : stats && stats.length > 0 ? (
@@ -52,7 +52,7 @@ const AdminDashboardPage = () => {
                             className="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6"
                           >
                             <dt className="text-sm font-medium text-gray-500 truncate capitalize">
-                              {item.nameEs}
+                              {item.name}
                             </dt>
                             <dd className="mt-1 text-3xl font-semibold text-gray-900">
                               {item.stat}
@@ -62,7 +62,7 @@ const AdminDashboardPage = () => {
                       ) : (
                         <div className="py-24 text-center">
                           <p className="bold text-red-500">
-                            No hay estadisticas disponibles😢
+                            😢 There are no stats to show
                           </p>
                         </div>
                       )}

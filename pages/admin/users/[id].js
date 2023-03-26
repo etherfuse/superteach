@@ -38,7 +38,7 @@ const AdminUsersShowPage = () => {
               <div className="bg-white py-6 space-y-6 ">
                 <div className="flex justify-between px-8 w-full items-center ">
                   <h3 className="text-lg leading-6 font-medium text-gray-900">
-                    Detalle de Usuario
+                    User Details
                   </h3>
 
                   <Link href="/admin/users" passHref legacyBehavior>
@@ -46,7 +46,7 @@ const AdminUsersShowPage = () => {
                       type="button"
                       className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-buttonbg hover:bg-buttonbg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-buttontxt"
                     >
-                      Volver a Usuarios
+                      Back to Users
                     </button>
                   </Link>
                 </div>
@@ -60,7 +60,8 @@ const AdminUsersShowPage = () => {
                       ) : fetchError ? (
                         <div className="py-24 text-center">
                           <p className="bold text-red-500">
-                            Ocurrio un error trayendo el usuario 😢
+                            😢 Oops! Something went wrong while fetching the
+                            user
                           </p>
                         </div>
                       ) : user ? (
@@ -92,7 +93,7 @@ const AdminUsersShowPage = () => {
                             <dl className="grid grid-cols-1 gap-x-2 gap-y-4 sm:grid-cols-3">
                               <div className="sm:col-span-1">
                                 <dt className="text-sm font-medium text-gray-500">
-                                  Creado en
+                                  Created at
                                 </dt>
                                 <dd className="mt-1 text-sm text-gray-900">
                                   {unixToFormat(
@@ -103,7 +104,7 @@ const AdminUsersShowPage = () => {
                               </div>
                               <div className="sm:col-span-1">
                                 <dt className="text-sm font-medium text-gray-500">
-                                  Actualizado en
+                                  Updated at
                                 </dt>
                                 <dd className="mt-1 text-sm text-gray-900">
                                   {unixToFormat(
@@ -114,7 +115,7 @@ const AdminUsersShowPage = () => {
                               </div>
                               <div className="sm:col-span-1">
                                 <dt className="text-sm font-medium text-gray-500">
-                                  Último acceso
+                                  Last login
                                 </dt>
                                 <dd className="mt-1 text-sm text-gray-900">
                                   {unixToFormat(

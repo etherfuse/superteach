@@ -33,9 +33,9 @@ const Pagination = ({ paginationData, setPage }) => {
       <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
         <div>
           <p className="text-sm text-gray-700">
-            Página <span className="font-medium">{page}</span> con{" "}
-            <span className="font-medium">{pageSize}</span> de{" "}
-            <span className="font-medium">{totalCount}</span> resultados
+            Page <span className="font-medium">{page}</span>, showing{" "}
+            <span className="font-medium">{pageSize}</span> of{" "}
+            <span className="font-medium">{totalCount}</span> results
           </p>
         </div>
         <div>

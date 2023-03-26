@@ -97,7 +97,7 @@ const ProfilePage = () => {
               <div className="bg-white py-6 px-4 space-y-6 sm:p-6">
                 <div>
                   <h3 className="text-lg leading-6 font-medium text-gray-900">
-                    Información Personal
+                    Profile Information
                   </h3>
                 </div>
 
@@ -107,7 +107,7 @@ const ProfilePage = () => {
                   <div className="grid grid-cols-6 gap-6">
                     <div className="col-span-6 sm:col-span-3">
                       <Input
-                        label="Nombre Completo"
+                        label="Name"
                         type="text"
                         name="name"
                         id="name"
@@ -115,7 +115,7 @@ const ProfilePage = () => {
                           ...register("name", {
                             required: {
                               value: true,
-                              message: "Nombre es requerido",
+                              message: "Name is required",
                             },
                           }),
                         }}
@@ -138,7 +138,7 @@ const ProfilePage = () => {
                     <div className="col-span-6 sm:col-span-3">
                       <div className="mt-1 sm:mt-0 sm:col-span-2">
                         <label className="block text-sm font-medium text-gray-700 mb-4">
-                          Foto de Perfil
+                          Profile Photo
                         </label>
                         <div className="flex items-center">
                           <span className="h-24 w-24 rounded-full overflow-hidden bg-gray-100">
@@ -161,7 +161,7 @@ const ProfilePage = () => {
                                 type="button"
                                 className="pointer-cursor ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                               >
-                                {userImageSrc ? "Cambiar" : "Subir"}
+                                {userImageSrc ? "Change" : "Upload"}
                               </div>
                             </span>
                             <input
@@ -187,7 +187,7 @@ const ProfilePage = () => {
                     type="submit"
                     className="bg-buttonbg border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-buttontxt  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-buttonbg"
                   >
-                    {isLoading ? <LoadingCircle /> : "Actualizar"}
+                    {isLoading ? <LoadingCircle /> : "Update"}
                   </button>
                 </div>
               )}

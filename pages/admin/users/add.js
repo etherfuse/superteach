@@ -11,11 +11,11 @@ import { useRouter } from "next/router";
 const roleOptions = [
   {
     value: "user",
-    label: "Usuario",
+    label: "User",
   },
   {
     value: "user,admin",
-    label: "Administrador",
+    label: "Admin",
   },
 ];
 
@@ -41,7 +41,7 @@ const AdminUsersAddPage = () => {
       if (!available) {
         setError("email", {
           type: "manual",
-          message: "El email ya está en uso",
+          message: "Email is already in use",
         });
       } else {
         clearErrors("email");
@@ -49,7 +49,7 @@ const AdminUsersAddPage = () => {
       return available;
     } catch (error) {
       console.log(error);
-      toast.error("Error al verificar el email");
+      toast.error("Error verifing email");
     }
   };
 
@@ -67,7 +67,7 @@ const AdminUsersAddPage = () => {
       }
     } catch (error) {
       console.log(error);
-      toast.error("Error al crear el usuario");
+      toast.error("Error creating user");
     }
     setIsLoading(false);
   };
@@ -81,14 +81,14 @@ const AdminUsersAddPage = () => {
               <div className="bg-white py-6 space-y-8 ">
                 <div className="flex flex-row px-8 w-full justify-between items-center  ">
                   <h3 className="text-lg leading-6 font-medium text-gray-900">
-                    Nuevo Usuario
+                    Create User
                   </h3>
                   <Link href="/admin/users" passHref legacyBehavior>
                     <button
                       type="button"
                       className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-buttonbg hover:bg-buttonbg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-inputfocus"
                     >
-                      Regresar a Usuarios
+                      Back to Users
                     </button>
                   </Link>
                 </div>
@@ -96,22 +96,21 @@ const AdminUsersAddPage = () => {
                   <div className="wrapper mx-auto">
                     <div className="inputfield lg:w-1/2 mb-4">
                       <p className="mb-2">
-                        Los usuarios agregados tienen que acceder con
-                        passwordless email.
+                        Users added here will have to login with passwordless
                       </p>
 
                       <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="fields max-w-md">
                           <div className="my-4 field">
                             <Input
-                              label="Nombre"
+                              label="Name"
                               name="name"
                               type="text"
                               register={{
                                 ...register("name", {
                                   required: {
                                     value: true,
-                                    message: "Nombre es requerido",
+                                    message: "Name is required",
                                   },
                                 }),
                               }}
@@ -130,12 +129,12 @@ const AdminUsersAddPage = () => {
                                 ...register("email", {
                                   required: {
                                     value: true,
-                                    message: "Email es requerido",
+                                    message: "Email is required",
                                   },
                                   pattern: {
                                     value:
                                       /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                                    message: "Email inválido",
+                                    message: "Email is invalid",
                                   },
                                 }),
                               }}
@@ -144,14 +143,14 @@ const AdminUsersAddPage = () => {
                           </div>
                           <div className="my-4 field">
                             <Select
-                              label="Rol"
+                              label="Role"
                               name="roles"
                               options={roleOptions}
                               register={{
                                 ...register("roles", {
                                   required: {
                                     value: true,
-                                    message: "El rol es requerido",
+                                    message: "Role is required",
                                   },
                                 }),
                               }}
@@ -168,7 +167,7 @@ const AdminUsersAddPage = () => {
                                 {isLoading ? (
                                   <LoadingCircle color="#ffffff" />
                                 ) : (
-                                  "Registrar"
+                                  "Create User"
                                 )}
                               </div>
                             </button>
