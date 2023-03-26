@@ -61,9 +61,9 @@ const CoverImage = ({
                 className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
               >
                 {imageSrc ? (
-                  <span>Cambiar Imágen</span>
+                  <span>Change Image</span>
                 ) : (
-                  <span>Sube un archivo</span>
+                  <span>Upload a file</span>
                 )}
                 <input
                   id={name}
@@ -77,7 +77,7 @@ const CoverImage = ({
                 />
               </label>
             </div>
-            <p className="text-xs text-gray-500">PNG, JPG, GIF hasta 10MB</p>
+            <p className="text-xs text-gray-500">PNG, JPG, GIF up to 4MB</p>
             <p className="text-xs text-gray-500">{dimensions}</p>
           </div>
         </div>

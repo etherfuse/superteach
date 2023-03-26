@@ -7,7 +7,11 @@ import LoadingCircle from "@/components/common/LoadingCircle";
 import classNames from "@/utils/classNames";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
-import { ChartBarIcon, UsersIcon } from "@heroicons/react/outline";
+import {
+  BookOpenIcon,
+  ChartBarIcon,
+  UsersIcon,
+} from "@heroicons/react/outline";
 import toast, { Toaster } from "react-hot-toast";
 
 const AdminLayout = ({ title, children, ...props }) => {
@@ -25,6 +29,12 @@ const AdminLayout = ({ title, children, ...props }) => {
       name: "Usuarios",
       href: "/admin/users",
       icon: UsersIcon,
+      current: false,
+    },
+    {
+      name: "Courses",
+      href: "/admin/courses",
+      icon: BookOpenIcon,
       current: false,
     },
   ];
@@ -47,69 +57,70 @@ const AdminLayout = ({ title, children, ...props }) => {
     return <NoAccessErrorPage />;
   }
 
-  return <>
-    <Head>
-      <title>{title ? `Dashboard | ${title}` : "Dashboard"}</title>
-      <link rel="icon" href="/favicon.ico" />
-    </Head>
+  return (
+    <>
+      <Head>
+        <title>{title ? `Dashboard | ${title}` : "Dashboard"}</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
 
-    <div className="min-h-full h-full">
-      {/* to show errors and success alerts  */}
-      <Toaster position="bottom-center" />
+      <div className="min-h-full h-full">
+        {/* to show errors and success alerts  */}
+        <Toaster position="bottom-center" />
 
-      <div className="flex flex-col w-full bg-gray-100 " {...props}>
-        <Header />
-        <div className="w-full max-w-7xl  mx-auto  ">
-          <div className="max-w-7xl w-full py-6 sm:px-6  ">
-            <div className="lg:grid lg:grid-cols-12 lg:gap-x-5">
-              <aside className="py-6 px-2 sm:px-6 lg:py-0 lg:px-0 lg:col-span-2">
-                <div className="layouttitle  w-full flex items-center justify-start pb-2">
-                  <p className="font-bold">Administrador</p>
-                </div>
-                <nav className="space-y-1">
-                  {navigation.map((item) => {
-                    if (router.pathname.includes(item.href)) {
-                      item.current = true;
-                    }
-                    return (
-                      (<Link
-                        key={item.name}
-                        href={item.href}
-                        className={classNames(
-                          item.current
-                            ? "bg-gray-50 text-selectedtxt hover:text-selectedtxt hover:bg-white"
-                            : "text-gray-900 hover:text-gray-900 hover:bg-gray-50",
-                          "group rounded-md px-3 py-2 flex items-center text-sm font-medium"
-                        )}
-                        aria-current={item.current ? "page" : undefined}>
-
-                        <item.icon
+        <div className="flex flex-col w-full bg-gray-100 " {...props}>
+          <Header />
+          <div className="w-full max-w-7xl  mx-auto  ">
+            <div className="max-w-7xl w-full py-6 sm:px-6  ">
+              <div className="lg:grid lg:grid-cols-12 lg:gap-x-5">
+                <aside className="py-6 px-2 sm:px-6 lg:py-0 lg:px-0 lg:col-span-2">
+                  <div className="layouttitle  w-full flex items-center justify-start pb-2">
+                    <p className="font-bold">Administrador</p>
+                  </div>
+                  <nav className="space-y-1">
+                    {navigation.map((item) => {
+                      if (router.pathname.includes(item.href)) {
+                        item.current = true;
+                      }
+                      return (
+                        <Link
+                          key={item.name}
+                          href={item.href}
                           className={classNames(
                             item.current
-                              ? "text-selectedtxt group-hover:text-selectedtxt"
-                              : "text-gray-400 group-hover:text-gray-500",
-                            "flex-shrink-0 -ml-1 mr-3 h-6 w-6"
+                              ? "bg-gray-50 text-selectedtxt hover:text-selectedtxt hover:bg-white"
+                              : "text-gray-900 hover:text-gray-900 hover:bg-gray-50",
+                            "group rounded-md px-3 py-2 flex items-center text-sm font-medium"
                           )}
-                          aria-hidden="true"
-                        />
-                        <span className="truncate">{item.name}</span>
+                          aria-current={item.current ? "page" : undefined}
+                        >
+                          <item.icon
+                            className={classNames(
+                              item.current
+                                ? "text-selectedtxt group-hover:text-selectedtxt"
+                                : "text-gray-400 group-hover:text-gray-500",
+                              "flex-shrink-0 -ml-1 mr-3 h-6 w-6"
+                            )}
+                            aria-hidden="true"
+                          />
+                          <span className="truncate">{item.name}</span>
+                        </Link>
+                      );
+                    })}
+                  </nav>
+                </aside>
 
-                      </Link>)
-                    );
-                  })}
-                </nav>
-              </aside>
-
-              <div className="space-y-6 sm:px-6 lg:px-0 lg:col-span-10">
-                {children}
+                <div className="space-y-6 sm:px-6 lg:px-0 lg:col-span-10">
+                  {children}
+                </div>
               </div>
             </div>
           </div>
+          <Footer />
         </div>
-        <Footer />
       </div>
-    </div>
-  </>;
+    </>
+  );
 };
 
 export default AdminLayout;
