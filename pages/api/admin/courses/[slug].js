@@ -20,7 +20,7 @@ handler.use(async (req, res, next) => {
   try {
     await parsemultiPartyForm(req);
   } catch (error) {
-    console.log("error parsing form data request", error);
+    console.info("error parsing form data request", error);
     res.status(500).json({ error });
     return;
   }
@@ -38,86 +38,53 @@ handler.use(async (req, res, next) => {
   }
 });
 
-//LIST COURSES
+//GET SPECIFIC COURSE
 handler.get(async (req, res) => {
-  //GET all courses
-  const db = req.db;
-  const { page, sort, order, limit } = req.query;
-
-  if (!page || !sort || !order || !limit) {
-    console.error("You need to provide page, sort and order query params");
-    res
-      .status(400)
-      .end("You need to provide page, sort and order query params");
+  const slug = req?.query?.slug;
+  if (!slug) {
+    res.status(400).end("No slug provided");
     return;
   }
 
-  const courses = await db
-    .collection("courses")
-    .aggregate([
-      {
-        $match: {},
-      },
-      {
-        $sort: {
-          [sort]: order === "asc" ? 1 : -1,
-        },
-      },
-      {
-        $skip: (Number(page) - 1) * Number(limit),
-      },
-      {
-        $limit: Number(limit),
-      },
-    ])
-    .toArray();
-
-  const coursesCount = await db.collection("courses").countDocuments();
-
-  res.json({
-    courses,
-    count: coursesCount,
-    totalPages: Math.ceil(coursesCount / Number(limit)),
-  });
+  try {
+    //get course from db
+    const course = await req.db.collection("courses").findOne({ slug });
+    res.status(200).json(course);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error });
+  }
 });
 
-//NEW COURSE
-handler.post(async (req, res) => {
-  //POST new course
-  //Creates new COURSE w cover images
+//UPDATE COURSE
+handler.put(async (req, res) => {
   const db = req.db;
+  const { slug } = req.query;
   const { name, description } = req.body;
-  const session = req.sessionUser;
+  if (!slug) {
+    res.status(400).end("No course slug provided");
+    return;
+  }
+
+  const courseNewData = {
+    name,
+    description,
+    updatedAt: dateNowUnix(),
+  };
 
   try {
-    //generate slug from name
-    const slug = slugify(name, {
-      replacement: "_",
-      lower: true,
-    });
-
     //check if course exists
-    const courseExists = await db.collection("courses").findOne({ slug });
+    const course = await db.collection("courses").findOne({ slug });
 
-    if (courseExists) {
-      console.error("Course already exists");
-      res.status(400).json({ message: "Course already exists" });
+    if (!course) {
+      res.status(404).end("Course not found");
       return;
     }
 
-    //create course
-    const courseData = {
-      name,
-      description,
-      slug,
-      createdAt: dateNowUnix(),
-      updatedAt: dateNowUnix(),
-      userId: session.id ? ObjectId(session.id) : null,
-    };
-
+    //Check files
     if (req.files) {
-      //setting up multer for uploads to cloudinary
       const { cover } = req.files;
+      console.log("cover", cover);
       if (cover) {
         upload.single("cover");
         //upload image to cloudinary
@@ -131,9 +98,10 @@ handler.post(async (req, res) => {
             crop: "fill",
             format: "jpg",
           });
-          courseData.cover = coverUpload.secure_url;
+          console.log("uploaded cover to cloudinary", coverUpload.secure_url);
+          courseNewData.cover = coverUpload.secure_url;
         } catch (error) {
-          console.log(
+          console.error(
             "error uploading cover to cloudinary Admin Category Creation",
             error
           );
@@ -143,11 +111,16 @@ handler.post(async (req, res) => {
       }
     }
 
-    //     //insert course
-    await db.collection("courses").insertOne(courseData);
-    res.status(200).json({ message: "ok" });
+    //update course
+    const courseUpdated = await db.collection("courses").findOneAndUpdate(
+      { slug }, //filter
+      { $set: courseNewData }, //update
+      { returnOriginal: false } //return updated document
+    );
+
+    res.status(200).json(courseUpdated.value);
   } catch (error) {
-    console.log("error", error);
+    console.error(error);
     res.status(500).json({ error });
   }
 });

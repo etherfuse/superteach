@@ -16,30 +16,29 @@ const CourseForm = ({ type = "new" }) => {
   } = useForm();
 
   const router = useRouter();
-  const courseId = router.query.courseId;
+  const slug = router.query.slug;
 
   const [loading, setLoading] = useState(false);
   const [course, setCourse] = useState(null);
 
-  //   useEffect(() => {
-  //     const getCategoryData = async (courseId) => {
-  //       try {
-  //         const { data } = await axios.get(`/api/admin/categories/${courseId}`);
+  useEffect(() => {
+    const getCourseData = async (slug) => {
+      try {
+        const { data } = await axios.get(`/api/admin/courses/${slug}`);
 
-  //         setCategory(data);
+        setCourse(data);
+        reset(data);
+      } catch (error) {
+        console.error(error);
+        toast.error("Error getting the course data");
+      }
+    };
 
-  //         reset(data);
-  //       } catch (error) {
-  //         console.error(error);
-  //         toast.error("Error al obtener los datos de la categoría");
-  //       }
-  //     };
-
-  //     if (type === "edit" && router.query.courseId) {
-  //       //print the data inside the fields
-  //       getCategoryData(router.query.courseId);
-  //     }
-  //   }, [router]);
+    if (type === "edit" && router.query.slug) {
+      //print the data inside the fields
+      getCourseData(router.query.slug);
+    }
+  }, [router]);
 
   const onSubmit = async (data) => {
     setLoading(true);
@@ -61,7 +60,7 @@ const CourseForm = ({ type = "new" }) => {
 
       //check if edit or new
       if (type === "edit") {
-        url = `/api/admin/courses/${router.query.courseId}`;
+        url = `/api/admin/courses/${router.query.slug}`;
         await axios.put(url, formData, { headers });
       } else {
         url = "/api/admin/courses/";
@@ -136,7 +135,7 @@ const CourseForm = ({ type = "new" }) => {
         name="cover"
         dimensions="Recommended Size: 1920x1080"
         errorMessage={errors?.photo?.message}
-        defaultValue={course?.photo}
+        defaultValue={course?.cover}
         register={
           type === "new"
             ? {

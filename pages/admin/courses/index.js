@@ -105,13 +105,16 @@ const AdminCoursesPage = () => {
 
                                 <th
                                   scope="col"
-                                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                  className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                                 >
                                   Enrolled
                                 </th>
 
-                                <th scope="col" className="relative px-6 py-3">
-                                  <span className="sr-only">Show</span>
+                                <th scope="col" className="relative px-3 py-3">
+                                  <span className="sr-only">Edit Courses</span>
+                                </th>
+                                <th scope="col" className="relative px-3 py-3">
+                                  <span className="sr-only">Show Lessons</span>
                                 </th>
                               </tr>
                             </thead>
@@ -152,12 +155,20 @@ const AdminCoursesPage = () => {
                                     ???
                                   </td>
 
-                                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                  <td className="px-3 py-4 whitespace-nowrap text-right text-sm font-medium">
                                     <Link
-                                      href={`/admin/courses/${course.slug}`}
+                                      href={`/admin/courses/${course.slug}/edit`}
                                       className="text-selectedtxt hover:text-selectedtxt"
                                     >
-                                      Show
+                                      Edit Course
+                                    </Link>
+                                  </td>
+                                  <td className="px-3 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    <Link
+                                      href={`/admin/courses/${course.slug}/lessons`}
+                                      className="text-selectedtxt hover:text-selectedtxt"
+                                    >
+                                      Show Lessons
                                     </Link>
                                   </td>
                                 </tr>

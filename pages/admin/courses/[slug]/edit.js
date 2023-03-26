@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react";
 import NoAccessErrorPage from "@/components/errors/NoAccessErrorPage";
 import CourseForm from "@/components/forms/CourseForm";
 
-const AdminCoursesAddPage = () => {
+const AdminCoursesEditPage = () => {
   const { data: session, status } = useSession();
 
   if (status === "loading") {
@@ -27,10 +27,10 @@ const AdminCoursesAddPage = () => {
   }
 
   return (
-    <AdminLayout title="Create course">
+    <AdminLayout title="Edit Course">
       <div className="bg-white px-6 py-6 flex flex-col">
         <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-semibold">Create Course</h1>
+          <h1 className="text-2xl font-semibold">Edit Course</h1>
           <Link href="/admin/courses/" passHref>
             <button
               type="button"
@@ -41,11 +41,11 @@ const AdminCoursesAddPage = () => {
           </Link>
         </div>
         <div className="mt-4">
-          <CourseForm />
+          <CourseForm type="edit" />
         </div>
       </div>
     </AdminLayout>
   );
 };
 
-export default AdminCoursesAddPage;
+export default AdminCoursesEditPage;

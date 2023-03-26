@@ -1,4 +1,5 @@
-import { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useState, useEffect } from "react";
 import Image from "next/image";
 const CoverImage = ({
   label,
@@ -6,8 +7,16 @@ const CoverImage = ({
   dimensions,
   errorMessage = "",
   register,
+  defaultValue = "",
 }) => {
   const [imageSrc, setimageSrc] = useState("");
+
+  //if value is not empty, set the imageSrc to the value
+  useEffect(() => {
+    if (defaultValue) {
+      setimageSrc(defaultValue);
+    }
+  }, [defaultValue]);
 
   const handleImagePreview = (e) => {
     const reader = new FileReader();
@@ -33,8 +42,8 @@ const CoverImage = ({
               {imageSrc ? (
                 <Image
                   src={imageSrc}
-                  width={1280}
-                  height={600}
+                  width={1920}
+                  height={1080}
                   alt="thumb"
                   className="h-full w-full object-cover"
                 />
