@@ -12,6 +12,8 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 import LoadingCircle from "@/components/common/LoadingCircle";
 import classNames from "classnames";
+import SimpleMDE from "react-simplemde-editor";
+import "easymde/dist/easymde.min.css";
 
 const CourseForm = ({ type = "new" }) => {
   const {
@@ -111,6 +113,10 @@ const CourseForm = ({ type = "new" }) => {
             }),
           }}
         />
+      </div>
+
+      <div className="markdowneditor">
+        <SimpleMDE />
       </div>
 
       <div className="flex justify-center items-center mt-8">
