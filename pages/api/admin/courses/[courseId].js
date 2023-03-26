@@ -104,7 +104,7 @@ handler.put(async (req, res) => {
             crop: "fill",
             format: "jpg",
           });
-          console.log("uploaded cover to cloudinary", coverUpload.secure_url);
+          console.info("uploaded cover to cloudinary", coverUpload.secure_url);
           courseNewData.cover = coverUpload.secure_url;
         } catch (error) {
           console.error(

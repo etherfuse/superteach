@@ -31,7 +31,6 @@ const AdminCoursesPage = () => {
           `/api/admin/courses/?page=${page}&limit=${pageSize}&sort=${sortBy}&order=${orderBy}`
         );
         const { courses, count, totalPages } = data;
-        console.log("data", data);
 
         setCourses(courses);
         setPaginationData({

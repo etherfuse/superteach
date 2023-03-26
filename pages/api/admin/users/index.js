@@ -92,7 +92,7 @@ handler.post(async (req, res) => {
     await db.collection("users").insertOne(user);
     res.status(200).json(user);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res
       .status(500)
       .json({ error: error.message, message: "Error Creando Usuario" });

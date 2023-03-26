@@ -34,7 +34,6 @@ const AdminCourseLessons = () => {
           `/api/admin/courses/?page=${page}&limit=${pageSize}&sort=${sortBy}&order=${orderBy}`
         );
         const { courses, count, totalPages } = data;
-        console.log("data", data);
 
         setCourses(courses);
         setPaginationData({
@@ -75,7 +74,7 @@ const AdminCourseLessons = () => {
                       </button>
                     </Link>
                     <Link
-                      href={`/admin/courses/${router?.query?._id}/lessons/add`}
+                      href={`/admin/courses/${router?.query?.courseId}/lessons/add`}
                       passHref
                       legacyBehavior
                     >

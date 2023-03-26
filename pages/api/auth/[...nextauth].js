@@ -55,9 +55,12 @@ export default NextAuth({
           .collection("users")
           .updateOne({ email: user.email }, { $set: user });
 
-        console.log(`${user.email} logged in and updated in DB =>`);
+        console.info(`${user.email} logged in and updated in DB =>`);
       } catch (error) {
-        console.log(`Error udating user ${user.email} in signinevent:`, error);
+        console.error(
+          `Error udating user ${user.email} in signinevent:`,
+          error
+        );
       }
     },
   },
@@ -99,8 +102,8 @@ const sendVerificationEmail = async (transport, email, from, url, host) => {
       text: `Inicia Sesión en ${host}`,
       html: html({ url, host, email }),
     });
-    console.log("Verification email sent to:", email);
+    console.info("Verification email sent to:", email);
   } catch (error) {
-    console.log("Error sending verification email:", error);
+    console.error("Error sending verification email:", error);
   }
 };

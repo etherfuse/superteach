@@ -22,7 +22,7 @@ const ContactPage = () => {
     }
 
     //DO WHATEVER YOU WANT HERE
-    console.log("SUBMITED DATA =>", data);
+    console.info("SUBMITED DATA =>", data);
   };
 
   return (

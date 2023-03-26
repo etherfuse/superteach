@@ -48,7 +48,7 @@ const AdminUsersAddPage = () => {
       }
       return available;
     } catch (error) {
-      console.log(error);
+      console.error(error);
       toast.error("Error verifing email");
     }
   };
@@ -66,7 +66,7 @@ const AdminUsersAddPage = () => {
         }, 1000);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
       toast.error("Error creating user");
     }
     setIsLoading(false);

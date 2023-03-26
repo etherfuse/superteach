@@ -20,7 +20,7 @@ handler.use(async (req, res, next) => {
   try {
     await parsemultiPartyForm(req);
   } catch (error) {
-    console.log("error parsing form data request", error);
+    console.error("error parsing form data request", error);
     res.status(500).json({ error });
     return;
   }
@@ -48,7 +48,9 @@ handler.get(async (req, res) => {
       .findOne({ _id: ObjectId(id) });
     res.json({ name, email, image, updatedAt });
   } else {
-    console.log("Can´t read profile, id from query does not match session id");
+    console.error(
+      "Can´t read profile, id from query does not match session id"
+    );
     res.status(401).end("You are trying to read a different user profile");
   }
 });
@@ -90,7 +92,7 @@ handler.put(async (req, res) => {
           );
           user.image = userImageUpload.secure_url;
         } catch (error) {
-          console.log("error uploading profile image to cloudinary", error);
+          console.error("error uploading profile image to cloudinary", error);
         }
       }
     }
@@ -100,7 +102,7 @@ handler.put(async (req, res) => {
       .findOneAndUpdate({ email: email, _id: ObjectId(id) }, { $set: user });
 
     // return user only with email, name and image values from value object
-    console.log(`User ${value.email} updated profile successfully`);
+    console.info(`User ${value.email} updated profile successfully`);
     res.json({
       message: "User updated successfully",
       user: {
@@ -110,7 +112,7 @@ handler.put(async (req, res) => {
       },
     });
   } else {
-    console.log(
+    console.error(
       "Can´t update profile, id from query does not match session id"
     );
     res.status(401).end("You are trying to update a different user profile");

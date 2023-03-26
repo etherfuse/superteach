@@ -22,7 +22,7 @@ export async function getServerSideProps(context) {
 }
 
 export default function Home({ isConnected }) {
-  console.log("isConnected", isConnected);
+  console.info("isConnected", isConnected);
   return (
     <MainLayout>
       <div className="content flex justify-center items-center w-full my-16">

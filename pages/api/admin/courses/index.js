@@ -20,7 +20,7 @@ handler.use(async (req, res, next) => {
   try {
     await parsemultiPartyForm(req);
   } catch (error) {
-    console.log("error parsing form data request", error);
+    console.error("error parsing form data request", error);
     res.status(500).json({ error });
     return;
   }
@@ -134,7 +134,7 @@ handler.post(async (req, res) => {
           });
           courseData.cover = coverUpload.secure_url;
         } catch (error) {
-          console.log(
+          console.error(
             "error uploading cover to cloudinary Admin Category Creation",
             error
           );
@@ -148,7 +148,7 @@ handler.post(async (req, res) => {
     await db.collection("courses").insertOne(courseData);
     res.status(200).json({ message: "ok" });
   } catch (error) {
-    console.log("error", error);
+    console.error("error", error);
     res.status(500).json({ error });
   }
 });

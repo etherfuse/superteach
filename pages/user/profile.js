@@ -80,7 +80,7 @@ const ProfilePage = () => {
       router.reload(window.location.pathname);
       toast.success("Perfil actualizado con éxito");
     } catch (err) {
-      console.log(err);
+      console.error(err);
       toast.error("Something went wrong updating your profile");
     }
 
