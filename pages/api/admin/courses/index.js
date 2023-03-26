@@ -38,6 +38,50 @@ handler.use(async (req, res, next) => {
   }
 });
 
+//LIST COURSES
+handler.get(async (req, res) => {
+  //GET all courses
+  const db = req.db;
+  const { page, sort, order, limit } = req.query;
+
+  if (!page || !sort || !order || !limit) {
+    console.error("You need to provide page, sort and order query params");
+    res
+      .status(400)
+      .end("You need to provide page, sort and order query params");
+    return;
+  }
+
+  const courses = await db
+    .collection("courses")
+    .aggregate([
+      {
+        $match: {},
+      },
+      {
+        $sort: {
+          [sort]: order === "asc" ? 1 : -1,
+        },
+      },
+      {
+        $skip: (Number(page) - 1) * Number(limit),
+      },
+      {
+        $limit: Number(limit),
+      },
+    ])
+    .toArray();
+
+  const coursesCount = await db.collection("courses").countDocuments();
+
+  res.json({
+    courses,
+    count: coursesCount,
+    totalPages: Math.ceil(coursesCount / Number(limit)),
+  });
+});
+
+//NEW COURSE
 handler.post(async (req, res) => {
   //POST new course
   //Creates new COURSE w cover images
@@ -65,7 +109,7 @@ handler.post(async (req, res) => {
       slug,
       createdAt: dateNowUnix(),
       updatedAt: dateNowUnix(),
-      userId: session.id ? session.id : null,
+      userId: session.id ? ObjectId(session.id) : null,
     };
 
     if (req.files) {

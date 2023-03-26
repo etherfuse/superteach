@@ -31,6 +31,7 @@ const AdminCoursesPage = () => {
           `/api/admin/courses/?page=${page}&limit=${pageSize}&sort=${sortBy}&order=${orderBy}`
         );
         const { courses, count, totalPages } = data;
+        console.log("data", data);
 
         setCourses(courses);
         setPaginationData({
@@ -88,13 +89,77 @@ const AdminCoursesPage = () => {
                           <table className="min-w-full divide-y divide-gray-200">
                             <thead className="bg-gray-50">
                               <tr>
-                                {/* Aquí deberías agregar las columnas del encabezado para los campos relevantes de los cursos */}
+                                <th
+                                  scope="col"
+                                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                >
+                                  Name
+                                </th>
+
+                                <th
+                                  scope="col"
+                                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                >
+                                  Created At
+                                </th>
+
+                                <th
+                                  scope="col"
+                                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                >
+                                  Enrolled
+                                </th>
+
+                                <th scope="col" className="relative px-6 py-3">
+                                  <span className="sr-only">Show</span>
+                                </th>
                               </tr>
                             </thead>
                             <tbody className="bg-white divide-y divide-gray-200">
                               {courses.map((course) => (
                                 <tr key={course._id}>
-                                  {/* Aquí deberías agregar las celdas de la tabla para los campos relevantes de los cursos */}
+                                  <td className="px-6 py-4 whitespace-nowrap">
+                                    <div className="flex items-center">
+                                      <div className="flex-shrink-0 h-12 w-20">
+                                        <img
+                                          className="h-12 w-20 rounded-md"
+                                          src={
+                                            course.cover ||
+                                            `https://avatars.dicebear.com/api/micah/${user.email}.svg?background=%23ffffff`
+                                          }
+                                          alt=""
+                                        />
+                                      </div>
+                                      <div className="ml-4">
+                                        <div className="text-sm font-medium text-gray-900 capitalize truncate">
+                                          {course.name
+                                            ? course.name
+                                            : "Name not assigned"}
+                                        </div>
+                                        <div className="text-sm text-gray-500"></div>
+                                      </div>
+                                    </div>
+                                  </td>
+
+                                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    {unixToFormat(
+                                      course.createdAt,
+                                      "PP -  hh:mm aaa"
+                                    )}
+                                  </td>
+
+                                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    ???
+                                  </td>
+
+                                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    <Link
+                                      href={`/admin/courses/${course.slug}`}
+                                      className="text-selectedtxt hover:text-selectedtxt"
+                                    >
+                                      Show
+                                    </Link>
+                                  </td>
                                 </tr>
                               ))}
                             </tbody>
