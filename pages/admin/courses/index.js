@@ -98,16 +98,15 @@ const AdminCoursesPage = () => {
 
                                 <th
                                   scope="col"
-                                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                                >
-                                  Created At
-                                </th>
-
-                                <th
-                                  scope="col"
                                   className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                                 >
                                   Enrolled
+                                </th>
+                                <th
+                                  scope="col"
+                                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                >
+                                  is Public?
                                 </th>
 
                                 <th scope="col" className="relative px-3 py-3">
@@ -145,14 +144,10 @@ const AdminCoursesPage = () => {
                                   </td>
 
                                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {unixToFormat(
-                                      course.createdAt,
-                                      "PP -  hh:mm aaa"
-                                    )}
-                                  </td>
-
-                                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     ???
+                                  </td>
+                                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    {course.isPublic ? "Yes" : "No"}
                                   </td>
 
                                   <td className="px-3 py-4 whitespace-nowrap text-right text-sm font-medium">

@@ -86,7 +86,7 @@ handler.post(async (req, res) => {
   //POST new course
   //Creates new COURSE w cover images
   const db = req.db;
-  const { name, description } = req.body;
+  const { name, description, isPublic } = req.body;
   const session = req.sessionUser;
 
   try {
@@ -110,6 +110,7 @@ handler.post(async (req, res) => {
       name,
       description,
       slug,
+      isPublic: isPublic === "true" ? true : false,
       createdAt: dateNowUnix(),
       updatedAt: dateNowUnix(),
       userId: session.id ? ObjectId(session.id) : null,

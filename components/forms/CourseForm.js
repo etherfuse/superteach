@@ -1,6 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useForm } from "react-hook-form";
-import { Input, TextArea, CoverImage } from "@/components/forms/fields";
+import {
+  Input,
+  TextArea,
+  CoverImage,
+  CheckBox,
+} from "@/components/forms/fields";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
@@ -12,11 +17,11 @@ const CourseForm = ({ type = "new" }) => {
     register,
     handleSubmit,
     reset,
+    watch,
     formState: { errors },
   } = useForm();
 
   const router = useRouter();
-  const slug = router.query.slug;
 
   const [loading, setLoading] = useState(false);
   const [course, setCourse] = useState(null);
@@ -34,7 +39,7 @@ const CourseForm = ({ type = "new" }) => {
       }
     };
 
-    if (type === "edit" && router.query.slug) {
+    if (type === "edit" && router?.query?.slug) {
       //print the data inside the fields
       getCourseData(router.query.slug);
     }
@@ -151,6 +156,18 @@ const CourseForm = ({ type = "new" }) => {
               }
         }
       />
+
+      <div className="inputwrapper my-6">
+        <CheckBox
+          label="Your course is public ? "
+          description="If you select this option, your course will be visible to everyone."
+          name="isPublic"
+          register={{
+            ...register("isPublic"),
+          }}
+        />
+      </div>
+
       <div className="flex justify-center items-center mt-8">
         <button
           type="submit"

@@ -3,12 +3,10 @@ const multer = require("multer"); // this is for uploading files
 import nc from "next-connect"; // this is for handling requests middleware
 import { getSession } from "next-auth/react"; // this is for getting the session
 import clientPromise from "@/lib/mongodb"; // this is for connecting to the database
-const { ObjectId } = require("mongodb"); // this is for converting strings to ObjectIds
 import dateNowUnix from "@/utils/dates/dateNowUnix"; // this is for getting the current date in unix format
 import ncoptions from "@/utils/ncoptions";
 import getCloudinary from "@/utils/getCloudinary"; // this is for getting the cloudinary configuration
 import parsemultiPartyForm from "@/utils/parsemultipartyform"; // this is for parsing the form data
-const slugify = require("slugify"); // this is for creating slugs
 
 const handler = nc(ncoptions); // this is for handling requests middleware
 const upload = multer({ dest: "/tmp" });
@@ -60,7 +58,7 @@ handler.get(async (req, res) => {
 handler.put(async (req, res) => {
   const db = req.db;
   const { slug } = req.query;
-  const { name, description } = req.body;
+  const { name, description, isPublic } = req.body;
   if (!slug) {
     res.status(400).end("No course slug provided");
     return;
@@ -69,6 +67,7 @@ handler.put(async (req, res) => {
   const courseNewData = {
     name,
     description,
+    isPublic: isPublic === "true" ? true : false,
     updatedAt: dateNowUnix(),
   };
 
@@ -84,7 +83,6 @@ handler.put(async (req, res) => {
     //Check files
     if (req.files) {
       const { cover } = req.files;
-      console.log("cover", cover);
       if (cover) {
         upload.single("cover");
         //upload image to cloudinary
