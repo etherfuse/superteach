@@ -8,6 +8,7 @@ import Pagination from "@/components/common/Pagination";
 import { unixToFormat } from "@/utils/dates";
 import { useRouter } from "next/router";
 import { List, arrayMove } from "react-movable";
+import { PencilAltIcon, ArrowsExpandIcon } from "@heroicons/react/outline";
 
 const AdminCourseLessons = () => {
   const router = useRouter();
@@ -109,14 +110,28 @@ const AdminCourseLessons = () => {
                               isSelected,
                             }) => (
                               <li {...props}>
-                                <div className="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
-                                  <div className="flex items-center justify-between">
-                                    <div className="flex items-center">
-                                      <div className="ml-4">
-                                        <div className="text-sm font-medium text-gray-900">
-                                          {value?.name}
+                                <div className="bg-white px-4 py-5 border-b border-gray-200 sm:px-6 ">
+                                  <div className="flex items-center justify-between w-full">
+                                    <div className="flex items-center justify-between w-full">
+                                      <div className="leftsection">
+                                        <div className="ml-4">
+                                          <div className="text-sm font-medium text-gray-900"></div>
+                                        </div>
+                                        <div className="ml-4">
+                                          <div className="flex  items-center text-base font-medium text-gray-900 capitalize">
+                                            <ArrowsExpandIcon className="h-5 w-5 text-gray-400 cursor-pointer mr-2" />
+                                            {value?.name}
+                                          </div>
                                         </div>
                                       </div>
+                                      <a
+                                        href={`/admin/courses/${router?.query?.courseId}/sections/${value?._id}/edit`}
+                                        className="ml-4"
+                                      >
+                                        <div className="text-sm font-medium text-gray-900">
+                                          <PencilAltIcon className="h-5 w-5 text-gray-400 cursor-pointer" />
+                                        </div>
+                                      </a>
                                     </div>
                                   </div>
                                 </div>

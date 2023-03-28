@@ -6,7 +6,7 @@ import NoAccessErrorPage from "@/components/errors/NoAccessErrorPage";
 import SectionForm from "@/components/forms/SectionForm";
 import { useRouter } from "next/router";
 
-const AdminSectionsAddPage = () => {
+const AdminSectionsEditPage = () => {
   const { data: session, status } = useSession();
   const router = useRouter();
 
@@ -32,7 +32,7 @@ const AdminSectionsAddPage = () => {
     <AdminLayout title="Create course">
       <div className="bg-white px-6 py-6 flex flex-col">
         <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-semibold">Create Section</h1>
+          <h1 className="text-2xl font-semibold">Edit Section </h1>
 
           <button
             type="button"
@@ -43,11 +43,11 @@ const AdminSectionsAddPage = () => {
           </button>
         </div>
         <div className="mt-4">
-          <SectionForm />
+          <SectionForm type="edit" />
         </div>
       </div>
     </AdminLayout>
   );
 };
 
-export default AdminSectionsAddPage;
+export default AdminSectionsEditPage;
