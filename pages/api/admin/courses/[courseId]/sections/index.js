@@ -51,7 +51,7 @@ handler.post(async (req, res) => {
       createdBy: ObjectId(_id),
       updatedAt: dateNowUnix(),
       courseId: ObjectId(courseId),
-      order: lastSection ? lastSection.order + 1 : 1,
+      order: lastSection ? lastSection.order + 1 : 0,
     };
 
     await db.collection("sections").insertOne(newSection);

@@ -32,8 +32,6 @@ const SectionForm = ({ type = "new" }) => {
       return;
     }
 
-    console.log("url =>", url);
-
     try {
       if (!url) return;
       //new

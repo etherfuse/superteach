@@ -9,16 +9,13 @@ import { unixToFormat } from "@/utils/dates";
 import { useRouter } from "next/router";
 import { List, arrayMove } from "react-movable";
 import { PencilAltIcon, ArrowsExpandIcon } from "@heroicons/react/outline";
+import toast from "react-hot-toast";
 
 const AdminCourseLessons = () => {
   const router = useRouter();
 
   const [isInitialLoading, setIsInitialLoading] = useState(true);
   const [sections, SetSections] = useState(undefined);
-
-  const addSection = () => {
-    console.log("Add section");
-  };
 
   useEffect(() => {
     const fetchSectionsOfCourse = async () => {
@@ -27,7 +24,6 @@ const AdminCourseLessons = () => {
           `/api/courses/${router.query.courseId}/sections`
         );
         SetSections(data);
-        console.log(data);
         setIsInitialLoading(false);
       } catch (err) {
         console.error(err);
@@ -36,6 +32,27 @@ const AdminCourseLessons = () => {
 
     if (router.query.courseId) fetchSectionsOfCourse();
   }, [router.query.courseId]);
+
+  const updateSectionOrder = async (newIndex, oldIndex) => {
+    console.log(newIndex, oldIndex);
+
+    //get the id of the section using the oldIndex
+    const sectionId = sections[oldIndex]._id;
+
+    //updating in the database
+    try {
+      const { data } = await axios.put(
+        `/api/admin/courses/${router.query.courseId}/sections/${sectionId}/order`,
+        {
+          oldIndex,
+          newIndex,
+        }
+      );
+    } catch (err) {
+      console.error(err);
+      toast.error("An error occurred ordering the sections");
+    }
+  };
 
   return (
     <AdminLayout title="Lessons">
@@ -58,7 +75,7 @@ const AdminCourseLessons = () => {
                         Back to Courses
                       </button>
                     </Link>
-                    <Link
+                    {/* <Link
                       href={`/admin/courses/${router?.query?.courseId}/lessons/add`}
                       passHref
                       legacyBehavior
@@ -69,7 +86,7 @@ const AdminCourseLessons = () => {
                       >
                         New Lesson
                       </button>
-                    </Link>
+                    </Link> */}
                     <Link
                       href={`/admin/courses/${router?.query?.courseId}/sections/add`}
                       passHref
@@ -99,6 +116,7 @@ const AdminCourseLessons = () => {
                               SetSections(
                                 arrayMove(sections, oldIndex, newIndex)
                               );
+                              updateSectionOrder(newIndex, oldIndex);
                             }}
                             renderList={({ children, props, isDragged }) => (
                               <ul {...props}>{children}</ul>
