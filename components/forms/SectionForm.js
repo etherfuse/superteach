@@ -22,8 +22,18 @@ const SectionForm = ({ type = "new" }) => {
   const [loading, setLoading] = useState(false);
 
   const onSubmit = async (data) => {
-    console.log("data", data);
     setLoading(true);
+    try {
+      await axios.post(
+        `/api/admin/courses/${router.query.courseId}/sections`,
+        data
+      );
+      toast.success("Section created successfully");
+      reset();
+      router.push(`/admin/courses/${router.query.courseId}/lessons`);
+    } catch (err) {
+      toast.error("An error occurred. Please try again later.");
+    }
     setLoading(false);
   };
 
