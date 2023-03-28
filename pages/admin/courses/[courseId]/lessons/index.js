@@ -52,6 +52,10 @@ const AdminCourseLessons = () => {
     getCourses();
   }, [page]);
 
+  const addSection = () => {
+    console.log("Add section");
+  };
+
   return (
     <AdminLayout title="Lessons">
       <div className="w-full flex justify-center">
@@ -83,6 +87,18 @@ const AdminCourseLessons = () => {
                         className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-buttontxt bg-buttonbg hover:bg-buttonbg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-buttonbg"
                       >
                         New Lesson
+                      </button>
+                    </Link>
+                    <Link
+                      href={`/admin/courses/${router?.query?.courseId}/sections/add`}
+                      passHref
+                      legacyBehavior
+                    >
+                      <button
+                        type="button"
+                        className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-buttontxt bg-buttonbg hover:bg-buttonbg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-buttonbg"
+                      >
+                        New Section
                       </button>
                     </Link>
                   </div>
