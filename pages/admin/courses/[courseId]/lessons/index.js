@@ -7,54 +7,34 @@ import axios from "axios";
 import Pagination from "@/components/common/Pagination";
 import { unixToFormat } from "@/utils/dates";
 import { useRouter } from "next/router";
+import { List, arrayMove } from "react-movable";
 
 const AdminCourseLessons = () => {
   const router = useRouter();
 
   const [isInitialLoading, setIsInitialLoading] = useState(true);
-  const [fetchError, setFetchError] = useState(false);
-  const [courses, setCourses] = useState(undefined);
-
-  const [page, setPage] = useState(1);
-  const [paginationData, setPaginationData] = useState({});
-
-  const pageSize = 20;
-  const sortBy = "createdAt";
-  const orderBy = "desc";
-
-  useEffect(() => {
-    setPage(1);
-  }, []);
-
-  useEffect(() => {
-    async function getCourses() {
-      setIsInitialLoading(true);
-      try {
-        const { data } = await axios.get(
-          `/api/admin/courses/?page=${page}&limit=${pageSize}&sort=${sortBy}&order=${orderBy}`
-        );
-        const { courses, count, totalPages } = data;
-
-        setCourses(courses);
-        setPaginationData({
-          page,
-          pageSize: courses.length,
-          totalPages,
-          totalCount: count,
-        });
-        setFetchError(false);
-      } catch (err) {
-        setFetchError(true);
-      }
-      setIsInitialLoading(false);
-    }
-
-    getCourses();
-  }, [page]);
+  const [sections, SetSections] = useState(undefined);
 
   const addSection = () => {
     console.log("Add section");
   };
+
+  useEffect(() => {
+    const fetchSectionsOfCourse = async () => {
+      try {
+        const { data } = await axios.get(
+          `/api/courses/${router.query.courseId}/sections`
+        );
+        SetSections(data);
+        console.log(data);
+        setIsInitialLoading(false);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    if (router.query.courseId) fetchSectionsOfCourse();
+  }, [router.query.courseId]);
 
   return (
     <AdminLayout title="Lessons">
@@ -110,15 +90,39 @@ const AdminCourseLessons = () => {
                         <div className="py-24">
                           <LoadingCircle color="#000000" />
                         </div>
-                      ) : fetchError ? (
-                        <div className="py-24 text-center">
-                          <p className="bold text-red-500">
-                            An error ocurred trying to get lessons 😢
-                          </p>
-                        </div>
-                      ) : courses && courses.length > 0 ? (
+                      ) : sections && sections.length > 0 ? (
                         <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                          Here goes the lessons listing...
+                          <List
+                            values={sections}
+                            onChange={({ oldIndex, newIndex }) => {
+                              SetSections(
+                                arrayMove(sections, oldIndex, newIndex)
+                              );
+                            }}
+                            renderList={({ children, props, isDragged }) => (
+                              <ul {...props}>{children}</ul>
+                            )}
+                            renderItem={({
+                              value,
+                              props,
+                              isDragged,
+                              isSelected,
+                            }) => (
+                              <li {...props}>
+                                <div className="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
+                                  <div className="flex items-center justify-between">
+                                    <div className="flex items-center">
+                                      <div className="ml-4">
+                                        <div className="text-sm font-medium text-gray-900">
+                                          {value?.name}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </li>
+                            )}
+                          />
                         </div>
                       ) : (
                         <div className="py-24 text-center">

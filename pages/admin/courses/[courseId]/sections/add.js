@@ -4,9 +4,11 @@ import LoadingCircle from "@/components/common/LoadingCircle";
 import { useSession } from "next-auth/react";
 import NoAccessErrorPage from "@/components/errors/NoAccessErrorPage";
 import SectionForm from "@/components/forms/SectionForm";
+import { useRouter } from "next/router";
 
 const AdminSectionsPage = () => {
   const { data: session, status } = useSession();
+  const router = useRouter();
 
   if (status === "loading") {
     return (
@@ -31,14 +33,14 @@ const AdminSectionsPage = () => {
       <div className="bg-white px-6 py-6 flex flex-col">
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-semibold">Create Section</h1>
-          <Link href="/admin/courses/" passHref>
-            <button
-              type="button"
-              className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-buttonbg hover:bg-buttonbg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-buttonbg"
-            >
-              Back to Courses
-            </button>
-          </Link>
+
+          <button
+            type="button"
+            className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-buttonbg hover:bg-buttonbg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-buttonbg"
+            onClick={() => router.back()}
+          >
+            Back to Sections
+          </button>
         </div>
         <div className="mt-4">
           <SectionForm />
