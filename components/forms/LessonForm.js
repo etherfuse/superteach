@@ -1,19 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useForm } from "react-hook-form";
-import {
-  Input,
-  TextArea,
-  CoverImage,
-  CheckBox,
-} from "@/components/forms/fields";
+import { useForm, Controller } from "react-hook-form";
+import { Input } from "@/components/forms/fields";
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 import LoadingCircle from "@/components/common/LoadingCircle";
-import classNames from "classnames";
-import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
+import dynamic from "next/dynamic";
+
+const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
+  ssr: false,
+});
 
 const CourseForm = ({ type = "new" }) => {
   const {
@@ -21,8 +19,9 @@ const CourseForm = ({ type = "new" }) => {
     handleSubmit,
     reset,
     watch,
+    setValue,
     formState: { errors },
-  } = useForm();
+  } = useForm({ mode: "onChange" });
 
   const router = useRouter();
 
@@ -49,42 +48,9 @@ const CourseForm = ({ type = "new" }) => {
   }, [router]);
 
   const onSubmit = async (data) => {
+    console.log("data", data);
     setLoading(true);
-    try {
-      const formData = new FormData(); // this is for creating a formdata object
-      Object.keys(data).forEach((key) => {
-        //append images
-        if (key === "cover") {
-          if (data[key][0]) formData.append(key, data[key][0]); //append image file to formData
-        } else {
-          formData.append(key, data[key]); //append regular keys to form data
-        }
-      });
-      let url;
-      const headers = {
-        accept: "application/json",
-        "Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
-      };
 
-      //check if edit or new
-      if (type === "edit") {
-        url = `/api/admin/courses/${router.query.slug}`;
-        await axios.put(url, formData, { headers });
-      } else {
-        url = "/api/admin/courses/";
-        await axios.post(url, formData, { headers });
-      }
-
-      toast.success("Course saved successfully");
-
-      setTimeout(() => {
-        window.location.href = "/admin/courses/";
-      }, 2000);
-    } catch (error) {
-      console.error("error =>", error);
-      //toast in english
-      toast.error("Error creating the course");
-    }
     setLoading(false);
   };
 
@@ -116,7 +82,24 @@ const CourseForm = ({ type = "new" }) => {
       </div>
 
       <div className="markdowneditor">
-        <SimpleMDE />
+        <input
+          type="hidden"
+          name="markdown"
+          {...register("markdown", {
+            required: {
+              value: true,
+              message: "markdown is required",
+            },
+          })}
+        />
+        <SimpleMDE
+          onChange={(value) => {
+            setValue("markdown", value, { shouldValidate: true });
+          }}
+        />
+        {errors?.markdown?.message && (
+          <p className="text-red-500 text-sm">{errors?.markdown?.message}</p>
+        )}
       </div>
 
       <div className="flex justify-center items-center mt-8">
