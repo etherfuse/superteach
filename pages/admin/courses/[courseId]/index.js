@@ -8,7 +8,11 @@ import Pagination from "@/components/common/Pagination";
 import { unixToFormat } from "@/utils/dates";
 import { useRouter } from "next/router";
 import { List, arrayMove } from "react-movable";
-import { PencilAltIcon, ArrowsExpandIcon } from "@heroicons/react/outline";
+import {
+  PencilAltIcon,
+  ArrowsExpandIcon,
+  PlusSmIcon,
+} from "@heroicons/react/outline";
 import toast from "react-hot-toast";
 
 const AdminCourseLessons = () => {
@@ -137,19 +141,31 @@ const AdminCourseLessons = () => {
                                         </div>
                                         <div className="ml-4">
                                           <div className="flex  items-center text-base font-medium text-gray-900 capitalize">
-                                            <ArrowsExpandIcon className="h-5 w-5 text-gray-400 cursor-pointer mr-2" />
-                                            {value?.name}
+                                            <ArrowsExpandIcon className="h-5 w-5 text-gray-400 cursor-pointer mr-2 " />
+                                            <p>{value?.name}</p>
+                                            <a
+                                              href={`/admin/courses/${router?.query?.courseId}/sections/${value?._id}/edit`}
+                                              className="ml-4"
+                                            >
+                                              <div className="text-sm font-medium text-gray-900">
+                                                <PencilAltIcon className="h-5 w-5 text-gray-400 cursor-pointer" />
+                                              </div>
+                                            </a>
                                           </div>
                                         </div>
                                       </div>
-                                      <a
-                                        href={`/admin/courses/${router?.query?.courseId}/sections/${value?._id}/edit`}
-                                        className="ml-4"
-                                      >
-                                        <div className="text-sm font-medium text-gray-900">
-                                          <PencilAltIcon className="h-5 w-5 text-gray-400 cursor-pointer" />
-                                        </div>
-                                      </a>
+
+                                      <div className="righsection flex">
+                                        <a
+                                          href={`/admin/sections/${value?._id}/lessons/add`}
+                                          className="ml-4"
+                                        >
+                                          <div className="flex text-sm font-medium text-gray-500">
+                                            <PlusSmIcon className="h-5 w-5 text-gray-500 cursor-pointer" />{" "}
+                                            Lesson
+                                          </div>
+                                        </a>
+                                      </div>
                                     </div>
                                   </div>
                                 </div>

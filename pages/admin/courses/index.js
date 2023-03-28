@@ -159,7 +159,7 @@ const AdminCoursesPage = () => {
                                   </td>
                                   <td className="px-3 py-4 whitespace-nowrap text-right text-sm font-medium">
                                     <Link
-                                      href={`/admin/courses/${course._id}/lessons`}
+                                      href={`/admin/courses/${course._id}`}
                                       className="text-selectedtxt hover:text-selectedtxt"
                                     >
                                       Show Lessons
