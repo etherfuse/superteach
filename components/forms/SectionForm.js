@@ -46,7 +46,7 @@ const SectionForm = ({ type = "new" }) => {
       );
 
       reset();
-      router.push(`/admin/courses/${router.query.courseId}/lessons`);
+      router.push(`/admin/courses/${router.query.courseId}`);
     } catch (err) {
       toast.error("An error occurred. Please try again later.");
     }
