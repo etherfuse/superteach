@@ -40,17 +40,62 @@ handler.use(async (req, res, next) => {
 //GET SPECIFIC COURSE
 handler.get(async (req, res) => {
   const { courseId } = req.query;
+  const { db } = req;
+
   if (!courseId) {
     res.status(400).end("No course id provided");
     return;
   }
 
   try {
-    //get course from db
-    const course = await req.db
+    //get course from db with sections and lessons using aggregate
+    const course = await db
       .collection("courses")
-      .findOne({ _id: ObjectId(courseId) });
-    res.status(200).json(course);
+      .aggregate([
+        {
+          $match: {
+            _id: ObjectId(courseId),
+          },
+        },
+        {
+          $lookup: {
+            from: "sections",
+            localField: "_id",
+            foreignField: "courseId",
+            as: "sections",
+          },
+        },
+        //add lessons to sections, lessons are a different collection connected by secitonId
+        {
+          $addFields: {
+            sections: {
+              $map: {
+                input: "$sections",
+                as: "section",
+                in: {
+                  $mergeObjects: [
+                    "$$section",
+                    {
+                      lessons: {
+                        $filter: {
+                          input: "$$section.lessons",
+                          as: "lesson",
+                          cond: {
+                            $eq: ["$$lesson.sectionId", "$$section._id"],
+                          },
+                        },
+                      },
+                    },
+                  ],
+                },
+              },
+            },
+          },
+        },
+      ])
+      .toArray();
+
+    res.status(200).json(course[0]);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error });

@@ -20,14 +20,20 @@ const AdminCourseLessons = () => {
 
   const [isInitialLoading, setIsInitialLoading] = useState(true);
   const [sections, SetSections] = useState(undefined);
+  const [course, setCourse] = useState(undefined);
 
   useEffect(() => {
     const fetchSectionsOfCourse = async () => {
       try {
         const { data } = await axios.get(
-          `/api/courses/${router.query.courseId}/sections`
+          `/api/admin/courses/${router.query.courseId}`
         );
-        SetSections(data);
+
+        console.log("data =>", data);
+        const { sections } = data;
+
+        SetSections(sections);
+        setCourse(data);
         setIsInitialLoading(false);
       } catch (err) {
         console.error(err);
@@ -67,7 +73,7 @@ const AdminCourseLessons = () => {
               <div className="bg-white py-6 space-y-6 ">
                 <div className="flex justify-between px-8 w-full items-center ">
                   <h3 className="text-lg leading-6 font-medium text-gray-900">
-                    Lessons for
+                    {course?.name} lessons.
                   </h3>
 
                   <div className="wrapper space-x-2">
