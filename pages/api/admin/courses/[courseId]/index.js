@@ -48,7 +48,6 @@ handler.get(async (req, res) => {
   }
 
   try {
-    //get course from db with sections and lessons using aggregate
     const course = await db
       .collection("courses")
       .aggregate([
@@ -65,31 +64,52 @@ handler.get(async (req, res) => {
             as: "sections",
           },
         },
-        //add lessons to sections, lessons are a different collection connected by secitonId
+        // Desenrollar las secciones
         {
-          $addFields: {
-            sections: {
-              $map: {
-                input: "$sections",
-                as: "section",
-                in: {
-                  $mergeObjects: [
-                    "$$section",
-                    {
-                      lessons: {
-                        $filter: {
-                          input: "$$section.lessons",
-                          as: "lesson",
-                          cond: {
-                            $eq: ["$$lesson.sectionId", "$$section._id"],
-                          },
-                        },
-                      },
-                    },
-                  ],
-                },
+          $unwind: {
+            path: "$sections",
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+        // Buscar lecciones correspondientes a cada sección
+        {
+          $lookup: {
+            from: "lessons",
+            localField: "sections._id",
+            foreignField: "sectionId",
+            as: "sections.lessons",
+          },
+        },
+        // Agrupar de nuevo por courseId
+        {
+          $group: {
+            _id: "$_id",
+            courseData: {
+              $first: {
+                name: "$name",
+                isPublic: "$isPublic",
+                description: "$description",
+                createdAt: "$createdAt",
+                slug: "$slug",
+                userId: "$userId",
+                cover: "$cover",
               },
             },
+            sections: {
+              $push: "$sections",
+            },
+          },
+        },
+        // Devolver los campos necesarios en el formato esperado
+        {
+          $project: {
+            _id: 1,
+            name: "$courseData.name",
+            description: "$courseData.description",
+            cover: "$courseData.cover",
+            createdAt: "$courseData.createdAt",
+            isPublic: "$courseData.isPublic",
+            sections: 1,
           },
         },
       ])
