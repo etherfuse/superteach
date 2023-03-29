@@ -26,24 +26,30 @@ const CourseForm = ({ type = "new" }) => {
   const router = useRouter();
 
   const [loading, setLoading] = useState(false);
-  const [course, setCourse] = useState(null);
+  const [lesson, setLesson] = useState(null);
 
   useEffect(() => {
-    const getCourseData = async (slug) => {
+    const getLessonData = async (courseId, sectionId, lessonId) => {
       try {
-        const { data } = await axios.get(`/api/admin/courses/${slug}`);
-
-        setCourse(data);
+        const { data } = await axios.get(
+          `/api/admin/courses/${courseId}/sections/${sectionId}/lessons/${lessonId}`
+        );
+        const { markdown } = data;
+        console.log("markdown =>", markdown);
+        setLesson(data);
         reset(data);
+
+        //set simplemde value
       } catch (error) {
         console.error(error);
-        toast.error("Error getting the course data");
+        toast.error("Error getting the lesson data");
       }
     };
 
-    if (type === "edit" && router?.query?.slug) {
+    if (type === "edit" && router?.query?.lessonId) {
       //print the data inside the fields
-      getCourseData(router.query.slug);
+      const { courseId, sectionId, lessonId } = router.query;
+      getLessonData(courseId, sectionId, lessonId);
     }
   }, [router]);
 

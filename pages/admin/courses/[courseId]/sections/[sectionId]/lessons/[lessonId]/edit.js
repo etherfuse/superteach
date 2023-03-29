@@ -6,7 +6,7 @@ import NoAccessErrorPage from "@/components/errors/NoAccessErrorPage";
 import LessonForm from "@/components/forms/LessonForm";
 import { useRouter } from "next/router";
 
-const AdminLessonsAddPage = () => {
+const AdminLessonsEditPage = () => {
   const { data: session, status } = useSession();
   const router = useRouter();
 
@@ -32,7 +32,7 @@ const AdminLessonsAddPage = () => {
     <AdminLayout title="Create course">
       <div className="bg-white px-6 py-6 flex flex-col">
         <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-semibold">Create Lesson</h1>
+          <h1 className="text-2xl font-semibold">Edit Lesson</h1>
 
           <button
             type="button"
@@ -43,11 +43,11 @@ const AdminLessonsAddPage = () => {
           </button>
         </div>
         <div className="mt-4">
-          <LessonForm />
+          <LessonForm type="edit" />
         </div>
       </div>
     </AdminLayout>
   );
 };
 
-export default AdminLessonsAddPage;
+export default AdminLessonsEditPage;
