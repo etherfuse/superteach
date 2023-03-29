@@ -50,6 +50,30 @@ const CourseForm = ({ type = "new" }) => {
   const onSubmit = async (data) => {
     console.log("data", data);
     setLoading(true);
+    try {
+      const { courseId, sectionId, lessonId } = router.query;
+
+      if (type === "new") {
+        await axios.post(
+          `/api/admin/courses/${courseId}/sections/${sectionId}/lessons`,
+          data
+        );
+      } else if (type === "edit") {
+        await axios.put(
+          `/api/admin/courses/${courseId}/sections/${sectionId}/lessons/${lessonId}`,
+          data
+        );
+      }
+
+      toast.success(
+        `${type === "new" ? "Lesson created" : "Lesson updated"} successfully`
+      );
+
+      router.push(`/admin/courses/${courseId}`);
+    } catch (error) {
+      console.error(error);
+      toast.error("Error creating the course");
+    }
 
     setLoading(false);
   };

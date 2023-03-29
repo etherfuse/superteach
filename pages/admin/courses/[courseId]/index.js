@@ -79,18 +79,7 @@ const AdminCourseLessons = () => {
                         Back to Courses
                       </button>
                     </Link>
-                    {/* <Link
-                      href={`/admin/courses/${router?.query?.courseId}/lessons/add`}
-                      passHref
-                      legacyBehavior
-                    >
-                      <button
-                        type="button"
-                        className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-buttontxt bg-buttonbg hover:bg-buttonbg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-buttonbg"
-                      >
-                        New Lesson
-                      </button>
-                    </Link> */}
+
                     <Link
                       href={`/admin/courses/${router?.query?.courseId}/sections/add`}
                       passHref
@@ -157,7 +146,7 @@ const AdminCourseLessons = () => {
 
                                       <div className="righsection flex">
                                         <a
-                                          href={`/admin/sections/${value?._id}/lessons/add`}
+                                          href={`/admin/courses/${router?.query?.courseId}/sections/${value?._id}/lessons/add`}
                                           className="ml-4"
                                         >
                                           <div className="flex text-sm font-medium text-gray-500">
