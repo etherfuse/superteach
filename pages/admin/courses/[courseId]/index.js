@@ -149,7 +149,6 @@ const AdminCourseLessons = () => {
                                           </div>
                                         </div>
                                       </div>
-
                                       <div className="righsection flex">
                                         <a
                                           href={`/admin/courses/${router?.query?.courseId}/sections/${value?._id}/lessons/add`}
@@ -162,6 +161,68 @@ const AdminCourseLessons = () => {
                                         </a>
                                       </div>
                                     </div>
+                                  </div>
+                                  {/* //SHOW SECTION LESSONS HERE USING LIST COMPONENT */}
+                                  <div className="sectionlessons">
+                                    {value?.lessons?.length > 0 && (
+                                      <List
+                                        values={value?.lessons}
+                                        onChange={({ oldIndex, newIndex }) => {
+                                          SetSections(
+                                            arrayMove(
+                                              sections,
+                                              oldIndex,
+                                              newIndex
+                                            )
+                                          );
+                                          updateSectionOrder(
+                                            newIndex,
+                                            oldIndex
+                                          );
+                                        }}
+                                        renderList={({
+                                          children,
+                                          props,
+                                          isDragged,
+                                        }) => <ul {...props}>{children}</ul>}
+                                        renderItem={({
+                                          value: lesson,
+                                          props,
+                                          isDragged,
+                                          isSelected,
+                                        }) => (
+                                          <li {...props}>
+                                            <div className="bg-white px-4 py-5 border-b border-gray-200 sm:px-6 ">
+                                              <div className="flex items-center justify-between w-full">
+                                                <div className="flex items-center justify-between w-full">
+                                                  <div className="leftsection">
+                                                    <div className="ml-4">
+                                                      <div className="text-sm font-medium text-gray-900"></div>
+                                                    </div>
+                                                    <div className="ml-4">
+                                                      <div className="flex  items-center text-base font-medium text-gray-900 capitalize">
+                                                        <ArrowsExpandIcon className="h-5 w-5 text-gray-400 cursor-pointer mr-2 " />
+                                                        <p className="text-sm">
+                                                          {lesson?.title}
+                                                        </p>
+                                                        <a
+                                                          href={`/admin/courses/${router?.query?.courseId}/sections/${value?._id}/lessons/${lesson?._id}/edit`}
+                                                          className="ml-4"
+                                                        >
+                                                          <div className="text-sm font-medium text-gray-900">
+                                                            <PencilAltIcon className="h-5 w-5 text-gray-400 cursor-pointer" />
+                                                          </div>
+                                                        </a>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </li>
+                                        )}
+                                      />
+                                    )}
                                   </div>
                                 </div>
                               </li>
