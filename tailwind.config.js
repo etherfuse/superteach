@@ -10,6 +10,11 @@ module.exports = {
         buttontxt: "#ffffff",
         selectedtxt: "#291f9e",
         inputfocus: "#291f9e",
+        st: {
+          "dark-blue": "#292941",
+          "light-blue": "#7230FF",
+          "dark-orange": "FF740F",
+        },
       },
     },
   },

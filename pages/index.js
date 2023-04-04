@@ -1,43 +1,38 @@
-import MainLayout from "@/components/layouts/MainLayout";
-import clientPromise from "@/lib/mongodb";
+import Image from "next/image";
 
-//SERVER EXAMPLE OF MONGODB CONNECTION
-export async function getServerSideProps(context) {
-  try {
-    // client.db() will be the default database passed in the MONGODB_URI
-    // You can change the database by calling the client.db() function and specifying a database like:
-    // const db = client.db("myDatabase");
-    // Then you can execute queries against your database like so:
-    // db.find({}) or any of the MongoDB Node Driver commands
-    await clientPromise;
-    return {
-      props: { isConnected: true },
-    };
-  } catch (e) {
-    console.error(e);
-    return {
-      props: { isConnected: false },
-    };
-  }
-}
-
-export default function Home({ isConnected }) {
-  console.info("isConnected", isConnected);
+const HomePage = () => {
   return (
-    <MainLayout>
-      <div className="content flex justify-center items-center w-full my-16">
-        <div className="wrapper max-w-7xl">
-          <h1 className="text-2xl text-center font-bold">
-            Molusco 🦑 <br /> Nextjs + Tailwind Starter!{" "}
-          </h1>
-          <br />
-          <div className="connectioncontainer">
-            <p className="font-bold ">
-              Conectado a MONGODB: {isConnected ? "YES 🙌" : "ÑO 😢"}{" "}
-            </p>
-          </div>
+    <div className="tempcontainer bg-st-dark-blue text-white min-h-screen  flex justify-center items-center flex-col ">
+      <h1 className="hidden">SuperTeam Mexico | SuperTeach</h1>
+      <Image
+        src="/images/superteamlogo.png"
+        alt="SuperTeam Logo"
+        width={600}
+        height={600}
+      />
+
+      <div className="flex flex-col items-center justify-center px-2">
+        <h2 className="text-2xl font-bold text-center">
+          SuperTeach viene en camino 🙌!
+        </h2>
+        <div className="content flex flex-col justify-center items-center w-full max-w-full my-8 text-base ">
+          <p className="text-xl  max-w-4xl text-center font-bold">
+            Superteach ofrece contenido educativo gratuito sobre{" "}
+            <a className="underline" href="https://solana.com/" target="_blank">
+              Solana
+            </a>
+          </p>
+          <p className="text-base  max-w-4xl text-center my-6 md:text-xl lg:my-2">
+            Inicia sesion abajo para recibir notificaciones cuando estemos
+            listos.
+          </p>
+          <p className="text-base  max-w-4xl text-center my-1 md:text-xl lg:my-0">
+            Comenzamos en Abril 10, 2023{" "}
+          </p>
         </div>
       </div>
-    </MainLayout>
+    </div>
   );
-}
+};
+
+export default HomePage;
