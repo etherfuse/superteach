@@ -13,7 +13,7 @@ module.exports = {
         st: {
           "dark-blue": "#292941",
           "light-blue": "#7230FF",
-          "dark-orange": "FF740F",
+          "dark-orange": "#FF740F",
         },
       },
     },

@@ -2,9 +2,10 @@ import NextAuth from "next-auth";
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import EmailProvider from "next-auth/providers/email";
 import clientPromise from "@/lib/mongodb";
-import { dateNowUnix } from "@/utils/dates";
+import GoogleProvider from "next-auth/providers/google";
+import dateNowUnix from "@/utils/dates/dateNowUnix";
 import nodemailer from "nodemailer";
-import html from "@/emailtemplates/verify-email";
+import html from "@/utils/emailtemplates/verify-email";
 
 export default NextAuth({
   secret: process.env.BASE_SECRET,
@@ -66,6 +67,10 @@ export default NextAuth({
   },
   // Configure one or more authentication providers
   providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    }),
     EmailProvider({
       server: {
         host: process.env.SMTP_HOST,
@@ -75,7 +80,7 @@ export default NextAuth({
           pass: process.env.SMTP_PASS,
         },
       },
-      from: "youremailhere@gmail.com",
+      from: "superhappydevhousemx@gmail.com",
       sendVerificationRequest({
         identifier: email,
         url,
@@ -98,8 +103,8 @@ const sendVerificationEmail = async (transport, email, from, url, host) => {
     await transport.sendMail({
       to: email,
       from,
-      subject: `Inicia Sesión en ${host}`,
-      text: `Inicia Sesión en ${host}`,
+      subject: `Log In in  ${host}`,
+      text: `Log in in ${host}`,
       html: html({ url, host, email }),
     });
     console.info("Verification email sent to:", email);
