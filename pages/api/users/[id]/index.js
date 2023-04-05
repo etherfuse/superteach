@@ -3,7 +3,7 @@ import nc from "next-connect";
 import clientPromise from "@/lib/mongodb";
 import { dateNowUnix } from "@/utils/dates";
 import getCloudinary from "@/config/cloudinary";
-import parsemultiPartyForm from "@/utils/parseMultiPartyForm";
+import parsemultiPartyForm from "@/utils/parsemultipartyform";
 const multer = require("multer");
 import ncoptions from "@/config/ncoptions";
 import { getSession } from "next-auth/react";
