@@ -1,7 +1,6 @@
 import Image from "next/image";
 
 import { getProviders, signIn } from "next-auth/react";
-
 import { useSession, signOut } from "next-auth/react";
 
 const HomePage = ({ providers }) => {
@@ -79,6 +78,16 @@ const HomePage = ({ providers }) => {
                 Gracias por registrarte en superteach! <br /> Te avisamos cuando
                 estemos listos.
               </p>
+              <p className="text-base  max-w-4xl text-center my-6 md:text-xl lg:my-2 font-bold">
+                Puedes entrar a nuestro discord en el siguiente link:
+              </p>
+              <a
+                className="text-bold underline"
+                href={process.env.NEXT_PUBLIC_DISCORD_INVITE_LINK}
+                target="_blank"
+              >
+                {process.env.NEXT_PUBLIC_DISCORD_INVITE_LINK}
+              </a>
             </div>
             <div className="googlesignincontainer">
               <div
