@@ -1,7 +1,7 @@
 //parses form data requests, it receives a request and a response
 import multiparty from "multiparty";
 
-const parsemultiPartyForm = async function (req) {
+const parsemultipartyform = async function (req) {
   //parses form data using multiparty
   const form = new multiparty.Form();
   form.parse(req, async (err, fields, files) => {
@@ -20,4 +20,4 @@ const parsemultiPartyForm = async function (req) {
   });
 };
 
-export default parsemultiPartyForm;
+export default parsemultipartyform;

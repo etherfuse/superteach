@@ -7,7 +7,7 @@ const { ObjectId } = require("mongodb"); // this is for converting strings to Ob
 import dateNowUnix from "@/utils/dates/dateNowUnix"; // this is for getting the current date in unix format
 import ncoptions from "@/utils/ncoptions";
 import getCloudinary from "@/utils/getCloudinary"; // this is for getting the cloudinary configuration
-import parsemultiPartyForm from "@/utils/parsemultipartyform"; // this is for parsing the form data
+import parsemultipartyform from "@/utils/parsemultipartyform"; // this is for parsing the form data
 const slugify = require("slugify"); // this is for creating slugs
 
 const handler = nc(ncoptions); // this is for handling requests middleware
@@ -18,7 +18,7 @@ const cloudinary = getCloudinary(); //gets configuration from utils/getcloudinar
 handler.use(async (req, res, next) => {
   //parses form data using multiparty
   try {
-    await parsemultiPartyForm(req);
+    await parsemultipartyform(req);
   } catch (error) {
     console.error("error parsing form data request", error);
     res.status(500).json({ error });
