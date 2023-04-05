@@ -36,6 +36,7 @@
     "react-hot-toast": "^2.2.0",
     "react-movable": "^3.0.4",
     "react-simplemde-editor": "^5.2.0",
+    "sib-api-v3-sdk": "^8.5.0",
     "slugify": "^1.6.5",
     "tailwindcss": "^3.0.23"
   },

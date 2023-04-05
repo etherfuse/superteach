@@ -6,6 +6,7 @@ import GoogleProvider from "next-auth/providers/google";
 import dateNowUnix from "@/utils/dates/dateNowUnix";
 import nodemailer from "nodemailer";
 import html from "@/utils/emailtemplates/verify-email";
+import sendinblueLib from "@/lib/sendinblueLib";
 
 export default NextAuth({
   secret: process.env.BASE_SECRET,
@@ -57,6 +58,25 @@ export default NextAuth({
           .updateOne({ email: user.email }, { $set: user });
 
         console.info(`${user.email} logged in and updated in DB =>`);
+
+        //send new user to sendinblue if new user
+        //and add it to a list
+        if (process.env.NODE_ENV === "production") {
+          try {
+            const sendinblueUser = {
+              email: user.email,
+              listIds: process.env.SENDINBLUE_LIST_IDS,
+              attributes: {
+                NAME: user.name || "",
+              },
+            };
+
+            await sendinblueLib.createOrUpdateContact(sendinblueUser);
+            console.info("user added to sendinblue and lists ");
+          } catch (error) {
+            console.error("error sending new user to sendinblue", error);
+          }
+        }
       } catch (error) {
         console.error(
           `Error udating user ${user.email} in signinevent:`,
