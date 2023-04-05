@@ -3,7 +3,7 @@ import nc from "next-connect";
 import clientPromise from "@/lib/mongodb";
 import { dateNowUnix } from "@/utils/dates";
 import getCloudinary from "@/config/cloudinary";
-import parsemultipartyform from "@/utils/parsemultipartyform";
+import parseMultiPartyForm from "@/utils/parseMultiPartyForm";
 const multer = require("multer");
 import ncoptions from "@/config/ncoptions";
 import { getSession } from "next-auth/react";
@@ -18,7 +18,7 @@ handler.use(async (req, res, next) => {
   //gets session and connects to DB Client if authenticated
   //parses form data using multiparty
   try {
-    await parsemultipartyform(req);
+    await parseMultiPartyForm(req);
   } catch (error) {
     console.error("error parsing form data request", error);
     res.status(500).json({ error });
