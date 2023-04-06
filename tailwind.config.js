@@ -12,8 +12,8 @@ module.exports = {
         inputfocus: "#291f9e",
         st: {
           "dark-blue": "#292941",
-          "light-blue": "#7230FF",
-          "dark-orange": "#FF740F",
+          "light-blue": "#bcb3ff",
+          "dark-orange": "#F4A60B",
         },
       },
     },
