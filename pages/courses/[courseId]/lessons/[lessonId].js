@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useRouter } from "next/router";
 import { Disclosure } from "@headlessui/react";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
@@ -12,35 +11,27 @@ export default function Lesson({ course, lessons }) {
   const { lessonId } = router.query;
   const { sections } = course;
 
-  console.log("lessonId", lessonId);
+  console.log("sections", sections);
 
   return (
     <MainLayout>
       <div className="min-h-screen bg-gray-100 flex">
-        {/* <Disclosure as="nav" className="bg-gray-800 p-4 md:hidden">
-        {({ open }) => (
-          <>
-            <Disclosure.Button className="flex items-center justify-between w-full">
-              <MenuIcon className="w-6 h-6 text-white" />
-              {open && <XIcon className="w-6 h-6 text-white" />}
-            </Disclosure.Button>
-            <Disclosure.Panel className="absolute z-10 top-0 left-0 w-full mt-12">
-              <Sidebar
-                lessons={lessons}
-                activeLesson={activeLesson}
-                selectLesson={selectLesson}
-              />
-            </Disclosure.Panel>
-          </>
-        )}
-      </Disclosure> */}
-        {/* <aside className="hidden md:block w-1/4 bg-gray-800 text-white h-screen overflow-y-auto">
-        <Sidebar
-          lessons={lessons}
-          activeLesson={activeLesson}
-          selectLesson={selectLesson}
-        />
-      </aside> */}
+        <Disclosure as="nav" className="bg-gray-800 p-4 md:hidden">
+          {({ open }) => (
+            <>
+              <Disclosure.Button className="flex items-center justify-between w-full">
+                <MenuIcon className="w-6 h-6 text-white" />
+                {open && <XIcon className="w-6 h-6 text-white" />}
+              </Disclosure.Button>
+              <Disclosure.Panel className="absolute z-10 top-0 left-0 w-full mt-12">
+                <Sidebar lessons={lessons} activeLesson={lessonId} />
+              </Disclosure.Panel>
+            </>
+          )}
+        </Disclosure>
+        <aside className="hidden md:block w-1/4 bg-gray-800 text-white h-screen overflow-y-auto">
+          <Sidebar sections={sections} activeLesson={lessonId} />
+        </aside>
         <main className="w-full md:w-3/4 bg-white p-4 md:pl-0 md:pr-8 h-screen overflow-y-auto">
           {/* Course {course.id}, Content {activeLesson} here... */}
         </main>
@@ -48,20 +39,23 @@ export default function Lesson({ course, lessons }) {
     </MainLayout>
   );
 
-  function Sidebar({ lessons, activeLesson, selectLesson }) {
+  function Sidebar({ sections, activeLesson }) {
+    console.log("sections", sections);
     return (
       <div className="bg-gray-800 text-white p-4 overflow-y-auto">
-        {lessons.map((lessonGroup) => (
-          <div key={lessonGroup.groupTitle}>
-            <h3 className="font-semibold mb-2">{lessonGroup.groupTitle}</h3>
+        {sections.map((section) => (
+          <div key={section._id}>
+            <h3 className="font-semibold mb-2">{section.name}</h3>
             <ul>
-              {lessonGroup.lessons.map((lesson) => (
+              {section.lessons.map((lesson) => (
                 <li
                   key={lesson.id}
                   className={`mb-2 px-4 py-2 rounded-md cursor-pointer ${
-                    activeLesson === lesson.id ? "bg-gray-700" : ""
+                    activeLesson === lesson._id ? "bg-gray-700" : ""
                   }`}
-                  onClick={() => selectLesson(lesson.id)}
+                  onClick={() =>
+                    router.push(`/courses/${course.slug}/lessons/${lesson._id}`)
+                  }
                 >
                   {lesson.title}
                 </li>
