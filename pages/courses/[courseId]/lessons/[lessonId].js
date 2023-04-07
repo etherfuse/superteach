@@ -3,20 +3,18 @@ import { useRouter } from "next/router";
 import { Disclosure } from "@headlessui/react";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
 import { getSession } from "next-auth/react";
+import clientPromise from "@/lib/mongodb";
+import { ObjectId } from "mongodb";
 
 export default function Lesson({ course, lessons }) {
   const router = useRouter();
   const { lessonId } = router.query;
-  const [activeLesson, setActiveLesson] = useState(lessonId);
+  const { sections } = course;
 
-  const selectLesson = (lessonId) => {
-    setActiveLesson(lessonId);
-    router.push(`/courses/${course.id}/lessons/${lessonId}`);
-  };
+  console.log("lessonId", lessonId);
 
   return (
     <div className="min-h-screen bg-gray-100 flex">
-      OLI aqui va todo y asi cuando ya este loggedin
       {/* <Disclosure as="nav" className="bg-gray-800 p-4 md:hidden">
         {({ open }) => (
           <>
@@ -33,17 +31,17 @@ export default function Lesson({ course, lessons }) {
             </Disclosure.Panel>
           </>
         )}
-      </Disclosure>
-      <aside className="hidden md:block w-1/4 bg-gray-800 text-white h-screen overflow-y-auto">
+      </Disclosure> */}
+      {/* <aside className="hidden md:block w-1/4 bg-gray-800 text-white h-screen overflow-y-auto">
         <Sidebar
           lessons={lessons}
           activeLesson={activeLesson}
           selectLesson={selectLesson}
         />
-      </aside>
+      </aside> */}
       <main className="w-full md:w-3/4 bg-white p-4 md:pl-0 md:pr-8 h-screen overflow-y-auto">
-        Course {course.id}, Content {activeLesson} here...
-      </main> */}
+        {/* Course {course.id}, Content {activeLesson} here... */}
+      </main>
     </div>
   );
 
@@ -77,24 +75,147 @@ export default function Lesson({ course, lessons }) {
 export async function getServerSideProps(context) {
   //check if user is logged in, if not redirect to login page
   //after login, redirect to the same page
-  const session = await getSession(context);
-
-  //get path url params
   const { params } = context;
-  const { courseId, lessonId } = params;
-
+  const session = await getSession(context);
+  const { courseId: courseSlug, lessonId } = params; //courseid is slug
   if (!session) {
     return {
       redirect: {
-        destination: `/auth/signin/?callbackUrl=/courses/${courseId}/lessons/${lessonId}`,
+        destination: `/auth/signin/?callbackUrl=/courses/${courseSlug}/lessons/${lessonId}`,
         permanent: false,
       },
     };
   }
 
-  console.log("todo ok con la session, oh shi");
+  const { id: userId } = session.user;
+
+  //IF IT HAS SESSION, GET COURSE DATA AND CHECK IF USER IS ENROLLED
+  const client = await clientPromise;
+  const db = client.db();
+
+  const course = await db
+    .collection("courses")
+    .aggregate([
+      {
+        $match: { slug: courseSlug, isPublic: true },
+      },
+      {
+        $lookup: {
+          from: "sections",
+          let: { course_id: "$_id" },
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $eq: ["$courseId", "$$course_id"],
+                },
+              },
+            },
+            {
+              $lookup: {
+                from: "lessons",
+                localField: "_id",
+                foreignField: "sectionId",
+                as: "lessons",
+              },
+            },
+            {
+              $addFields: {
+                lessons: {
+                  $map: {
+                    input: "$lessons",
+                    as: "lesson",
+                    in: {
+                      $mergeObjects: [
+                        "$$lesson",
+                        {
+                          content: {
+                            $cond: {
+                              if: {
+                                $eq: ["$$lesson._id", lessonId],
+                              },
+                              then: "$$lesson.markdown",
+                              else: "$$REMOVE",
+                            },
+                          },
+                        },
+                      ],
+                    },
+                  },
+                },
+              },
+            },
+          ],
+          as: "sections",
+        },
+      },
+      {
+        $addFields: {
+          sections: {
+            $filter: {
+              input: "$sections",
+              as: "section",
+              cond: { $ne: ["$$section._id", null] },
+            },
+          },
+        },
+      },
+    ])
+    .toArray();
+
+  //if course does not exist, return not found 404
+  if (!course) {
+    return {
+      notFound: true,
+    };
+  }
+
+  const { _id: courseId } = course[0] || null;
+
+  try {
+    //check if current lesson exists
+    const lessonExists = course[0].sections.some((section) =>
+      section.lessons.some((lesson) => lesson._id.toString() === lessonId)
+    );
+
+    //404 if lesson does not exist
+    if (!lessonExists) {
+      return {
+        notFound: true,
+      };
+    }
+  } catch (error) {
+    //404
+    return {
+      notFound: true,
+    };
+  }
+
+  //check if is enrolled in the course
+  let enrollment = await db.collection("enrollments").findOne({
+    courseId,
+    userId: ObjectId(userId),
+  });
+
+  //if not enrolled, enroll user in the course
+  if (!enrollment) {
+    const enrollmentData = {
+      courseId,
+      userId: ObjectId(userId),
+      completedLessons: [],
+    };
+
+    await db.collection("enrollments").insertOne(enrollmentData);
+    enrollment = enrollmentData;
+  }
+
+  //GET lesson data or redirect to first lesson
+
+  const serializedCourse = JSON.parse(JSON.stringify(course[0]));
 
   return {
-    props: {},
+    props: {
+      course: serializedCourse,
+    },
   };
 }

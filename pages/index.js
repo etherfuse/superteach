@@ -29,10 +29,7 @@ const HomePage = ({ courses }) => {
               <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-4 px-6">
                 {courses.map((course) => (
                   //full course card, full with image
-                  <Link
-                    href={`/courses/${course.slug}/lessons/1`}
-                    key={course.slug}
-                  >
+                  <Link href={`/courses/${course.slug}`} key={course.slug}>
                     <div className="bg-black  rounded-lg shadow-md overflow-hidden">
                       <div className="relative">
                         <img
@@ -93,6 +90,7 @@ export async function getStaticProps() {
 
   //serialize data
   publicCourses = JSON.parse(JSON.stringify(courses));
+  console.log("publicCourses", publicCourses);
   return {
     props: {
       courses: publicCourses,
