@@ -1,4 +1,5 @@
 import { LockClosedIcon, BookOpenIcon } from "@heroicons/react/outline";
+import { CheckCircleIcon } from "@heroicons/react/solid";
 import classNames from "classnames";
 import { useRouter } from "next/router";
 
@@ -23,10 +24,13 @@ const Sidebar = ({ sections, activeLesson, enrollment }) => {
               >
                 {
                   //if lesson is locked, show lock icon
-                  !enrollment.completedLessons.includes(lesson._id) &&
+                  !enrollment.completedLessons.includes(lesson._id) ? (
                     activeLesson !== lesson._id && (
                       <LockClosedIcon className="w-4 h-4 mr-2 text-gray-400" />
                     )
+                  ) : (
+                    <CheckCircleIcon className="w-4 h-4 mr-2 text-green-400" />
+                  )
                 }
 
                 {
@@ -44,7 +48,7 @@ const Sidebar = ({ sections, activeLesson, enrollment }) => {
                   ) : (
                     <a
                       href={`/courses/${router.query.courseId}/lessons/${lesson._id}`}
-                      className="truncate text-white hover:underline hover:cursor-pointer"
+                      className="truncate text-white hover:underline hover:cursor-pointer capitalize"
                     >
                       {lesson.title}
                     </a>

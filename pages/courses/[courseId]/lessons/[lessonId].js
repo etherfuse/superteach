@@ -1,6 +1,5 @@
 /* eslint-disable react/no-children-prop */
 import { useRouter } from "next/router";
-import { useState, createElement } from "react";
 import { Disclosure } from "@headlessui/react";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
 import { getSession } from "next-auth/react";
@@ -8,7 +7,6 @@ import clientPromise from "@/lib/mongodb";
 import { ObjectId } from "mongodb";
 import MainLayout from "@/components/layouts/MainLayout";
 
-import classNames from "classnames";
 import Sidebar from "@/components/course/Sidebar";
 import MarkDownContent from "@/components/course/MarkDownContent";
 
@@ -16,9 +14,6 @@ export default function Lesson({ course, enrollment, currentLesson }) {
   const router = useRouter();
   const { lessonId } = router.query;
   const { sections } = course;
-
-  console.log("currentLesson", currentLesson);
-  console.log("enrollment", enrollment);
 
   return (
     <MainLayout>
@@ -57,6 +52,8 @@ export default function Lesson({ course, enrollment, currentLesson }) {
               <MarkDownContent
                 title={currentLesson.name}
                 content={currentLesson.markdown}
+                currentLesson={currentLesson}
+                courseCompleted={enrollment.courseCompleted}
               />
             </div>
           </main>
@@ -166,6 +163,9 @@ export async function getServerSideProps(context) {
 
   const { _id: courseId } = course[0] || null;
 
+  //order sections by order
+  course[0].sections.sort((a, b) => a.order - b.order);
+
   try {
     //check if current lesson exists
     const lessonExists = course[0].sections.some((section) =>
@@ -207,6 +207,35 @@ export async function getServerSideProps(context) {
   const currentLesson = await db.collection("lessons").findOne({
     _id: ObjectId(lessonId),
   });
+
+  //get next and previous lesson ids in currentLesson
+  const currentSection = course[0].sections.find((section) =>
+    section.lessons.some((lesson) => lesson._id.toString() === lessonId)
+  );
+
+  const currentLessonIndex = currentSection.lessons.findIndex(
+    (lesson) => lesson._id.toString() === lessonId
+  );
+
+  let nextLesson = currentSection.lessons[currentLessonIndex + 1];
+
+  if (!nextLesson) {
+    //try with next section
+    const currentSectionIndex = course[0].sections.findIndex(
+      (section) => section._id.toString() === currentSection._id.toString()
+    );
+
+    const nextSection = course[0].sections[currentSectionIndex + 1];
+    if (nextSection) {
+      nextLesson = nextSection.lessons[0];
+    }
+  }
+
+  //check if we are in the last lesson and section of the course
+  //if yes, islastLesson = true
+  const isLastLesson = !nextLesson;
+  currentLesson.nextLesson = nextLesson?._id || null;
+  currentLesson.isLastLesson = isLastLesson;
 
   //GET lesson data or redirect to first lesson
   const serializedCourse = JSON.parse(JSON.stringify(course[0]));
