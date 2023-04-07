@@ -1,14 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 import Image from "next/image";
 import clientPromise from "@/lib/mongodb";
-
-import { getProviders, signIn } from "next-auth/react";
-import { useSession, signOut } from "next-auth/react";
+import Link from "next/link";
 
 const HomePage = ({ courses }) => {
-  const { data: session } = useSession();
-  console.log("courses", courses);
-
   return (
     <div className="tempcontainer bg-st-dark-blue text-white min-h-screen  flex justify-center items-center flex-col ">
       <h1 className="hidden">SuperTeam Mexico | SuperTeach</h1>
@@ -19,13 +14,13 @@ const HomePage = ({ courses }) => {
         height={600}
       />
 
-      <div className="flex flex-col items-center justify-center px-2 -mt-4">
-        <h2 className="text-2xl font-bold text-center">
+      <div className="flex flex-col items-center justify-center px-2 -mt-2 md:-mt-4">
+        <h2 className="text-lg md:text-2xl font-bold text-center">
           Aprende Solana con SuperTeach 🙌!
         </h2>
         <>
           <div className="content flex flex-col justify-center items-center w-full max-w-full my-8 text-base ">
-            <p className="text-2xl  max-w-4xl text-center font-bold">
+            <p className="text-xl md:text-2xl  max-w-4xl text-center font-bold">
               Ya disponible el primer curso de SuperTeach en Español 😎
             </p>
           </div>
@@ -34,29 +29,33 @@ const HomePage = ({ courses }) => {
               <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-4 px-6">
                 {courses.map((course) => (
                   //full course card, full with image
-                  <div
-                    className="bg-black  rounded-lg shadow-md overflow-hidden"
-                    key={course._id}
+                  <Link
+                    href={`/courses/${course.slug}/lessons/1`}
+                    key={course.slug}
                   >
-                    <div className="relative">
-                      <img
-                        className="w-full h-48 object-cover"
-                        src={course.cover}
-                        alt={course.name}
-                      />
-                      <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent text-white">
-                        <h3 className="text-lg font-semibold">{course.name}</h3>
+                    <div className="bg-black  rounded-lg shadow-md overflow-hidden">
+                      <div className="relative">
+                        <img
+                          className="w-full h-48 object-cover"
+                          src={course.cover}
+                          alt={course.name}
+                        />
+                        <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent text-white">
+                          <h3 className="text-lg font-semibold">
+                            {course.name}
+                          </h3>
+                        </div>
+                      </div>
+                      <div className="p-4">
+                        <p className="text-sm text-gray-400">
+                          {course.description}
+                        </p>
+                      </div>
+                      <div className="p-4 flex justify-center items-center bg-st-dark-orange text-xl font-bold text-st-dark-blue">
+                        Iniciar Curso
                       </div>
                     </div>
-                    <div className="p-4">
-                      <p className="text-sm text-gray-400">
-                        {course.description}
-                      </p>
-                    </div>
-                    <div className="p-4 flex justify-center items-center bg-st-dark-orange text-xl font-bold text-st-dark-blue">
-                      Iniciar Curso
-                    </div>
-                  </div>
+                  </Link>
                 ))}
               </div>
             )}
