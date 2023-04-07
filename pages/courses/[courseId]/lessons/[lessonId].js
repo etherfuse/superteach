@@ -14,6 +14,7 @@ import rehypeReact from "rehype-react";
 import remarkBreaks from "remark-breaks";
 import DOMPurify from "isomorphic-dompurify";
 import classNames from "classnames";
+import { LockClosedIcon, BookOpenIcon } from "@heroicons/react/outline";
 
 const domPurifyConfig = {
   ADD_TAGS: ["iframe"],
@@ -34,6 +35,7 @@ export default function Lesson({ course, enrollment, currentLesson }) {
   const { sections } = course;
 
   console.log("currentLesson", currentLesson);
+  console.log("enrollment", enrollment);
   const sanitizedMarkdown = DOMPurify.sanitize(
     currentLesson.markdown,
     domPurifyConfig
@@ -42,74 +44,120 @@ export default function Lesson({ course, enrollment, currentLesson }) {
 
   return (
     <MainLayout>
-      <div className="min-h-screen bg-st-dark-blue flex w-full border-red-600 border fixed">
-        <Disclosure as="nav" className="bg-st-dark-blue p-4 md:hidden">
-          {({ open }) => (
-            <>
-              <Disclosure.Button className="flex items-center justify-between w-full">
-                <MenuIcon className="w-6 h-6 text-white" />
-                {open && <XIcon className="w-6 h-6 text-white" />}
-              </Disclosure.Button>
-              <Disclosure.Panel className="absolute z-10 top-0 left-0 w-full mt-12">
-                <Sidebar sections={sections} activeLesson={lessonId} />
-              </Disclosure.Panel>
-            </>
-          )}
-        </Disclosure>
-        <aside className="hidden md:flex bg-st-dark-blue text-white h-screen overflow-y-auto w-96 ">
-          <Sidebar sections={sections} activeLesson={lessonId} />
-        </aside>
-        <main className="w-full md:w-3/4 bg-st-dark-blue p-4 md:pl-0 md:pr-8 h-screen overflow-y-auto text-white border-white border">
-          {/* //content here */}
-          <div className="markdown px-4">
-            <div className="markdown">
-              <h1 className="capitalize font-bold mb-4">
-                {currentLesson.title}
-              </h1>
-              <ReactMarkdown
-                className={classNames(
-                  "prose-sm",
-                  "text-white",
-                  "text-base",
-                  "max-w-none",
-                  "mx-auto"
-                )}
-                remarkPlugins={[remarkGfm, remarkBreaks]}
-                rehypePlugins={[
-                  [rehypeRaw],
-                  [rehypeReact, { createElement: createElement }],
-                ]}
-              >
-                {sanitizedMarkdown}
-              </ReactMarkdown>
+      <div className="ultrawrapper w-full flex items-center justify-start">
+        <div className="bg-st-dark-blue w-full block min-h-screen h-full max-w-6xl">
+          <Disclosure as="nav" className="bg-st-dark-blue p-4 md:hidden">
+            {({ open }) => (
+              <>
+                <Disclosure.Button className="flex items-center justify-between w-full">
+                  <MenuIcon className="w-6 h-6 text-white" />
+                  {open && <XIcon className="w-6 h-6 text-white" />}
+                </Disclosure.Button>
+                <Disclosure.Panel className="absolute z-10 top-0 left-0 w-full mt-12 md:w-96 md:fixed md:left-0 md:top-0 md:pt-0">
+                  {" "}
+                  <Sidebar
+                    sections={sections}
+                    activeLesson={lessonId}
+                    enrollment={enrollment}
+                  />
+                </Disclosure.Panel>
+              </>
+            )}
+          </Disclosure>
+          <aside className="hidden lg:flex bg-st-dark-blue text-white h-screen w-96 fixed overflow-y-scroll  ">
+            <Sidebar
+              sections={sections}
+              activeLesson={lessonId}
+              enrollment={enrollment}
+            />
+          </aside>
+          <main className="w-full flex-1 md:flex-1 bg-st-dark-blue p-4 md:pl-0 md:pr-8 h-screen overflow-y-auto text-white  lg:ml-96">
+            {" "}
+            {/* //content here */}
+            <div className="markdown w-full max-w-7xl px-4 ">
+              {" "}
+              <div className="markdown">
+                <h1 className="capitalize font-bold mb-4 text-2xl">
+                  {currentLesson.title}
+                </h1>
+                <ReactMarkdown
+                  className={classNames(
+                    "prose-sm",
+                    "text-white",
+                    "text-base",
+                    "max-w-none",
+                    "mx-auto"
+                  )}
+                  remarkPlugins={[remarkGfm, remarkBreaks]}
+                  rehypePlugins={[
+                    [rehypeRaw],
+                    [rehypeReact, { createElement: createElement }],
+                  ]}
+                >
+                  {sanitizedMarkdown}
+                </ReactMarkdown>
+                <div className="flex justify-between mt-8">
+                  <div>
+                    {currentLesson.previousLesson && (
+                      <button
+                        className="flex items-center text-sm font-bold text-white hover:text-st-blue-2"
+                        onClick={() =>
+                          router.push(
+                            `/courses/${course.slug}/lessons/${currentLesson.previousLesson}`
+                          )
+                        }
+                      >
+                        <BookOpenIcon className="w-5 h-5 mr-2" />
+                        Previous Lesson
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-        </main>
+          </main>
+        </div>
       </div>
     </MainLayout>
   );
 
-  function Sidebar({ sections, activeLesson }) {
-    console.log("sections", sections);
+  function Sidebar({ sections, activeLesson, enrollment }) {
     return (
-      <div className="bg-st-dark-blue text-white p-4 overflow-y-auto border-white border h-min-screen h-full w-full">
+      <div className="bg-st-dark-blue text-white p-4  h-full w-full block">
         {sections.map((section) => (
           <div key={section._id}>
-            <h3 className="font-bold mb-2 uppercase text-sm  ">
-              {section.name}
-            </h3>
+            <h3 className="font-bold mb-2 uppercase text-sm">{section.name}</h3>
             <ul>
               {section.lessons.map((lesson) => (
                 <li
                   key={lesson._id}
-                  className={`mb-2 px-4 rounded-md cursor-pointer capitalize underline ${
-                    activeLesson === lesson._id ? "bg-gray-700" : ""
-                  }`}
+                  className={classNames(
+                    "flex items-center py-2 px-4 rounded-md cursor-pointer hover:bg-st-dark-blue-2",
+                    activeLesson === lesson._id && "font-bold capitalize",
+                    !enrollment.completedLessons.includes(lesson._id) &&
+                      activeLesson !== lesson._id &&
+                      "opacity-50 hover:opacity-50 cursor-not-allowed"
+                  )}
                   onClick={() =>
                     router.push(`/courses/${course.slug}/lessons/${lesson._id}`)
                   }
                 >
-                  {lesson.title}
+                  {
+                    //if lesson is locked, show lock icon
+                    !enrollment.completedLessons.includes(lesson._id) &&
+                      activeLesson !== lesson._id && (
+                        <LockClosedIcon className="w-4 h-4 mr-2 text-gray-400" />
+                      )
+                  }
+
+                  {
+                    //if lesson is locked, show lock icon
+                    activeLesson === lesson._id && (
+                      <BookOpenIcon className="w-4 h-4 mr-2 text-gray-400" />
+                    )
+                  }
+
+                  <p className="truncate">{lesson.title}</p>
                 </li>
               ))}
             </ul>

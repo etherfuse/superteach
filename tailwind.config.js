@@ -5,6 +5,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      screens: {
+        md: "768px",
+      },
       colors: {
         buttonbg: "#291f9e",
         buttontxt: "#ffffff",
