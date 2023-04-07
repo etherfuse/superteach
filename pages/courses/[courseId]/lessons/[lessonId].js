@@ -7,27 +7,10 @@ import { getSession } from "next-auth/react";
 import clientPromise from "@/lib/mongodb";
 import { ObjectId } from "mongodb";
 import MainLayout from "@/components/layouts/MainLayout";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
-import rehypeRaw from "rehype-raw";
-import rehypeReact from "rehype-react";
-import remarkBreaks from "remark-breaks";
-import DOMPurify from "isomorphic-dompurify";
-import classNames from "classnames";
-import { LockClosedIcon, BookOpenIcon } from "@heroicons/react/outline";
 
-const domPurifyConfig = {
-  ADD_TAGS: ["iframe"],
-  ADD_ATTR: [
-    "src",
-    "width",
-    "height",
-    "frameborder",
-    "allow",
-    "allowfullscreen",
-    "title",
-  ],
-};
+import classNames from "classnames";
+import Sidebar from "@/components/course/Sidebar";
+import MarkDownContent from "@/components/course/MarkDownContent";
 
 export default function Lesson({ course, enrollment, currentLesson }) {
   const router = useRouter();
@@ -36,11 +19,6 @@ export default function Lesson({ course, enrollment, currentLesson }) {
 
   console.log("currentLesson", currentLesson);
   console.log("enrollment", enrollment);
-  const sanitizedMarkdown = DOMPurify.sanitize(
-    currentLesson.markdown,
-    domPurifyConfig
-  );
-  console.log("sanitizedMarkdown", sanitizedMarkdown);
 
   return (
     <MainLayout>
@@ -76,97 +54,16 @@ export default function Lesson({ course, enrollment, currentLesson }) {
             {/* //content here */}
             <div className="markdown w-full max-w-7xl px-4 ">
               {" "}
-              <div className="markdown">
-                <h1 className="capitalize font-bold mb-4 text-2xl">
-                  {currentLesson.title}
-                </h1>
-                <ReactMarkdown
-                  className={classNames(
-                    "prose-sm",
-                    "text-white",
-                    "text-base",
-                    "max-w-none",
-                    "mx-auto"
-                  )}
-                  remarkPlugins={[remarkGfm, remarkBreaks]}
-                  rehypePlugins={[
-                    [rehypeRaw],
-                    [rehypeReact, { createElement: createElement }],
-                  ]}
-                >
-                  {sanitizedMarkdown}
-                </ReactMarkdown>
-                <div className="flex justify-between mt-8">
-                  <div>
-                    {currentLesson.previousLesson && (
-                      <button
-                        className="flex items-center text-sm font-bold text-white hover:text-st-blue-2"
-                        onClick={() =>
-                          router.push(
-                            `/courses/${course.slug}/lessons/${currentLesson.previousLesson}`
-                          )
-                        }
-                      >
-                        <BookOpenIcon className="w-5 h-5 mr-2" />
-                        Previous Lesson
-                      </button>
-                    )}
-                  </div>
-                </div>
-              </div>
+              <MarkDownContent
+                title={currentLesson.name}
+                content={currentLesson.markdown}
+              />
             </div>
           </main>
         </div>
       </div>
     </MainLayout>
   );
-
-  function Sidebar({ sections, activeLesson, enrollment }) {
-    return (
-      <div className="bg-st-dark-blue text-white p-4  h-full w-full block">
-        {sections.map((section) => (
-          <div key={section._id}>
-            <h3 className="font-bold mb-2 uppercase text-sm">{section.name}</h3>
-            <ul>
-              {section.lessons.map((lesson) => (
-                <li
-                  key={lesson._id}
-                  className={classNames(
-                    "flex items-center py-2 px-4 rounded-md cursor-pointer hover:bg-st-dark-blue-2",
-                    activeLesson === lesson._id && "font-bold capitalize",
-                    !enrollment.completedLessons.includes(lesson._id) &&
-                      activeLesson !== lesson._id &&
-                      "opacity-50 hover:opacity-50 cursor-not-allowed"
-                  )}
-                  onClick={() =>
-                    router.push(`/courses/${course.slug}/lessons/${lesson._id}`)
-                  }
-                >
-                  {
-                    //if lesson is locked, show lock icon
-                    !enrollment.completedLessons.includes(lesson._id) &&
-                      activeLesson !== lesson._id && (
-                        <LockClosedIcon className="w-4 h-4 mr-2 text-gray-400" />
-                      )
-                  }
-
-                  {
-                    //if lesson is locked, show lock icon
-                    activeLesson === lesson._id && (
-                      <BookOpenIcon className="w-4 h-4 mr-2 text-gray-400" />
-                    )
-                  }
-
-                  <p className="truncate">{lesson.title}</p>
-                </li>
-              ))}
-            </ul>
-            <hr className="my-4" />
-          </div>
-        ))}
-      </div>
-    );
-  }
 }
 
 export async function getServerSideProps(context) {
