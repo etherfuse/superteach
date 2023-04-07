@@ -5,6 +5,7 @@ import { MenuIcon, XIcon } from "@heroicons/react/outline";
 import { getSession } from "next-auth/react";
 import clientPromise from "@/lib/mongodb";
 import { ObjectId } from "mongodb";
+import MainLayout from "@/components/layouts/MainLayout";
 
 export default function Lesson({ course, lessons }) {
   const router = useRouter();
@@ -14,8 +15,9 @@ export default function Lesson({ course, lessons }) {
   console.log("lessonId", lessonId);
 
   return (
-    <div className="min-h-screen bg-gray-100 flex">
-      {/* <Disclosure as="nav" className="bg-gray-800 p-4 md:hidden">
+    <MainLayout>
+      <div className="min-h-screen bg-gray-100 flex">
+        {/* <Disclosure as="nav" className="bg-gray-800 p-4 md:hidden">
         {({ open }) => (
           <>
             <Disclosure.Button className="flex items-center justify-between w-full">
@@ -32,17 +34,18 @@ export default function Lesson({ course, lessons }) {
           </>
         )}
       </Disclosure> */}
-      {/* <aside className="hidden md:block w-1/4 bg-gray-800 text-white h-screen overflow-y-auto">
+        {/* <aside className="hidden md:block w-1/4 bg-gray-800 text-white h-screen overflow-y-auto">
         <Sidebar
           lessons={lessons}
           activeLesson={activeLesson}
           selectLesson={selectLesson}
         />
       </aside> */}
-      <main className="w-full md:w-3/4 bg-white p-4 md:pl-0 md:pr-8 h-screen overflow-y-auto">
-        {/* Course {course.id}, Content {activeLesson} here... */}
-      </main>
-    </div>
+        <main className="w-full md:w-3/4 bg-white p-4 md:pl-0 md:pr-8 h-screen overflow-y-auto">
+          {/* Course {course.id}, Content {activeLesson} here... */}
+        </main>
+      </div>
+    </MainLayout>
   );
 
   function Sidebar({ lessons, activeLesson, selectLesson }) {

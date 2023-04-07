@@ -1,6 +1,5 @@
 import Head from "next/head";
 import Header from "@/components/common/Header";
-import Footer from "@/components/common/Footer";
 import Seo from "@/components/common/Seo";
 
 const Layout = ({ title, description, children, ...rest }) => {
@@ -13,7 +12,6 @@ const Layout = ({ title, description, children, ...rest }) => {
       <div className="flex flex-col w-full" {...rest}>
         <Header />
         <div className="my-0">{children}</div>
-        <Footer />
       </div>
     </>
   );

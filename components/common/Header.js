@@ -7,20 +7,17 @@ import { useSession, signOut } from "next-auth/react";
 import classNames from "@/utils/classNames";
 
 //HEADER SETUP
-const logoUrl = "/logo.png";
+const logoUrl = "/images/superteamlogo.png";
 const navigation = {
   categories: [],
-  pages: [
-    { name: "Demo Page", href: "/demo" },
-    { name: "Contact Us", href: "/contact" },
-  ],
+  pages: [],
 };
 
 const Header = ({ fixed = false }) => {
   const { data: session } = useSession();
 
   return (
-    <Popover className={`relative bg-white `}>
+    <Popover className={`relative bg-black `}>
       <div
         className={`absolute inset-0 shadow  pointer-events-none `}
         aria-hidden="true"
