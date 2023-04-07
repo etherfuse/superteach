@@ -23,15 +23,24 @@ export default function Lesson({ course, enrollment, currentLesson }) {
             {({ open }) => (
               <>
                 <Disclosure.Button className="flex items-center justify-between w-full">
-                  <MenuIcon className="w-6 h-6 text-white" />
-                  {open && <XIcon className="w-6 h-6 text-white" />}
+                  <div>
+                    {open ? (
+                      <XIcon
+                        className="w-6 h-6 text-white"
+                        aria-hidden="true"
+                      />
+                    ) : (
+                      <MenuIcon className="w-6 h-6 text-white z-20" />
+                    )}
+                  </div>
                 </Disclosure.Button>
-                <Disclosure.Panel className="absolute z-10 top-0 left-0 w-full mt-12 md:w-96 md:fixed md:left-0 md:top-0 md:pt-0">
+                <Disclosure.Panel className="absolute pt-24 z-10 top-0 left-0 w-full mt-12 md:w-96 md:fixed md:left-0 md:top-0 md:pt-0">
                   {" "}
                   <Sidebar
                     sections={sections}
                     activeLesson={lessonId}
                     enrollment={enrollment}
+                    mobile={true}
                   />
                 </Disclosure.Panel>
               </>
