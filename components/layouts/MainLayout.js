@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Header from "@/components/common/Header";
-import Footer from "@/components/common/Footer";
 import Seo from "@/components/common/Seo";
+import { Toaster } from "react-hot-toast";
 
 const Layout = ({ title, description, children, ...rest }) => {
   return (
@@ -10,10 +10,10 @@ const Layout = ({ title, description, children, ...rest }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Seo subtitle={title} description={description} />
-      <div className="flex flex-col w-full" {...rest}>
-        <Header />
-        <div className="my-0">{children}</div>
-        <Footer />
+      <div className="flex flex-col w-full bg-st-dark-blue" {...rest}>
+        <Toaster position="bottom-center" />
+        <Header fixed={true} />
+        <div className="my-0 pt-20">{children}</div>
       </div>
     </>
   );

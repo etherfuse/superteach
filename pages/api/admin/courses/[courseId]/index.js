@@ -54,66 +54,48 @@ handler.get(async (req, res) => {
         {
           $match: {
             _id: ObjectId(courseId),
+            isPublic: true,
           },
         },
         {
           $lookup: {
             from: "sections",
-            localField: "_id",
-            foreignField: "courseId",
+            let: { course_id: "$_id" },
+            pipeline: [
+              {
+                $match: {
+                  $expr: {
+                    $eq: ["$courseId", "$$course_id"],
+                  },
+                },
+              },
+              {
+                $lookup: {
+                  from: "lessons",
+                  localField: "_id",
+                  foreignField: "sectionId",
+                  as: "lessons",
+                },
+              },
+            ],
             as: "sections",
           },
         },
-        // Desenrollar las secciones
         {
-          $unwind: {
-            path: "$sections",
-            preserveNullAndEmptyArrays: true,
-          },
-        },
-        // Buscar lecciones correspondientes a cada sección
-        {
-          $lookup: {
-            from: "lessons",
-            localField: "sections._id",
-            foreignField: "sectionId",
-            as: "sections.lessons",
-          },
-        },
-        // Agrupar de nuevo por courseId
-        {
-          $group: {
-            _id: "$_id",
-            courseData: {
-              $first: {
-                name: "$name",
-                isPublic: "$isPublic",
-                description: "$description",
-                createdAt: "$createdAt",
-                slug: "$slug",
-                userId: "$userId",
-                cover: "$cover",
+          $addFields: {
+            sections: {
+              $filter: {
+                input: "$sections",
+                as: "section",
+                cond: { $ne: ["$$section._id", null] },
               },
             },
-            sections: {
-              $push: "$sections",
-            },
-          },
-        },
-        // Devolver los campos necesarios en el formato esperado
-        {
-          $project: {
-            _id: 1,
-            name: "$courseData.name",
-            description: "$courseData.description",
-            cover: "$courseData.cover",
-            createdAt: "$courseData.createdAt",
-            isPublic: "$courseData.isPublic",
-            sections: 1,
           },
         },
       ])
       .toArray();
+
+    console.log(course);
 
     res.status(200).json(course[0]);
   } catch (error) {

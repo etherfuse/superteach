@@ -7,29 +7,24 @@ import { useSession, signOut } from "next-auth/react";
 import classNames from "@/utils/classNames";
 
 //HEADER SETUP
-const logoUrl = "/logo.png";
+const logoUrl = "/images/superteamlogo.png";
 const navigation = {
   categories: [],
-  pages: [
-    { name: "Demo Page", href: "/demo" },
-    { name: "Contact Us", href: "/contact" },
-  ],
+  pages: [],
 };
 
 const Header = ({ fixed = false }) => {
   const { data: session } = useSession();
 
   return (
-    <Popover className={`relative bg-white `}>
+    <Popover className={`relative bg-black `}>
       <div
         className={`absolute inset-0 shadow  pointer-events-none `}
         aria-hidden="true"
       />
-      <div
-        className={`${fixed && "fixed z-50"}  bg-happy-pink-600  w-full z-20 `}
-      >
+      <div className={`${fixed && "fixed z-50"}  bg-black  w-full z-20 `}>
         {/* DESKTOP */}
-        <div className="max-w-7xl mx-auto flex justify-between items-center px-4 py-5 sm:px-6 sm:py-4 lg:px-8 md:justify-start md:space-x-10 ">
+        <div className="max-w-7xl mx-auto flex justify-between items-center px-4 py-5 sm:px-6 sm:py-4 lg:px-8 md:justify-start md:space-x-10 lg:max-w-full ">
           <div>
             <Link href="/" className="flex">
               <img className="h-8 w-auto sm:h-10" src={logoUrl} alt="" />

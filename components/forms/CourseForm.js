@@ -101,8 +101,8 @@ const CourseForm = ({ type = "new" }) => {
                 message: "Name must have at least 3 characters",
               },
               maxLength: {
-                value: 18,
-                message: "Name must have less than 18 characters",
+                value: 50,
+                message: "Name must have less than 50 characters",
               },
               required: {
                 value: true,
@@ -124,8 +124,8 @@ const CourseForm = ({ type = "new" }) => {
                 message: "Description must have at least 30 characters",
               },
               maxLength: {
-                value: 280,
-                message: "Description must have less than 280 characters",
+                value: 380,
+                message: "Description must have less than 380 characters",
               },
               required: {
                 value: true,

@@ -5,6 +5,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      screens: {
+        md: "768px",
+      },
       colors: {
         buttonbg: "#291f9e",
         buttontxt: "#ffffff",
@@ -12,8 +15,8 @@ module.exports = {
         inputfocus: "#291f9e",
         st: {
           "dark-blue": "#292941",
-          "light-blue": "#7230FF",
-          "dark-orange": "#FF740F",
+          "light-blue": "#bcb3ff",
+          "dark-orange": "#F4A60B",
         },
       },
     },
@@ -21,5 +24,9 @@ module.exports = {
   daisyui: {
     themes: false,
   },
-  plugins: [require("@tailwindcss/forms"), require("daisyui")],
+  plugins: [
+    require("@tailwindcss/forms"),
+    require("@tailwindcss/typography"),
+    require("daisyui"),
+  ],
 };
