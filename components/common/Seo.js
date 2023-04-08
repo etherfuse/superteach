@@ -2,12 +2,13 @@ import { NextSeo } from "next-seo";
 
 //EDIT ME PLEASE
 const data = {
-  siteName: "Molus.co",
-  title: "Molus.co Starter",
-  description: "Molus.co NextJs Starter Description",
-  url: "https://molus.co",
+  siteName: "SuperteamMX | Superteach",
+  title: "SuperteamMX | Superteach",
+  description:
+    "Superteach parte de Superteam México ofrece cursos con un enfoque en Solana. Aprende a programar, desarrollar aplicaciones descentralizadas, interactuar con NFTs y mucho más. ¡Únete a nuestra comunidad y domina el ecosistema de Solana hoy!",
+  url: "https://learn.superteam.mx",
   imageUrl: "/og.jpeg",
-  twitter: "@moluscomx",
+  twitter: "@superteammexico",
 };
 
 const Seo = ({

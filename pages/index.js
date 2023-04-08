@@ -2,10 +2,16 @@
 import Image from "next/image";
 import clientPromise from "@/lib/mongodb";
 import Link from "next/link";
+import Seo from "@/components/common/Seo";
+import Head from "next/head";
 
 const HomePage = ({ courses }) => {
   return (
     <div className="tempcontainer bg-st-dark-blue text-white min-h-screen  flex justify-center items-center flex-col ">
+      <Head>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <Seo subtitle="" />
       <h1 className="hidden">SuperTeam Mexico | SuperTeach</h1>
       <Image
         src="/images/superteamlogo.png"
