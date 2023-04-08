@@ -26,30 +26,36 @@ const HomePage = ({ courses }) => {
           </div>
           <div className="courseslist container">
             {courses && courses.length > 0 && (
-              <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-4 px-6">
+              <div className="grid grid-cols-1  text-center gap-4 px-6">
                 {courses.map((course) => (
                   //full course card, full with image
-                  <Link href={`/courses/${course.slug}`} key={course.slug}>
-                    <div className="bg-black  rounded-lg shadow-md overflow-hidden">
-                      <div className="relative">
-                        <img
-                          className="w-full h-48 object-cover"
-                          src={course.cover}
-                          alt={course.name}
-                        />
-                        <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent text-white">
-                          <h3 className="text-lg font-semibold">
-                            {course.name}
-                          </h3>
+                  <Link
+                    href={`/courses/${course.slug}`}
+                    key={course.slug}
+                    className="w-full lg:flex lg:justify-center lg:items-center"
+                  >
+                    <div className="bg-black  rounded-lg shadow-md overflow-hidden w-full lg:w-1/2 ">
+                      <div className="innerwrapper">
+                        <div className="relative ">
+                          <img
+                            className="w-full  object-cover"
+                            src={course.cover}
+                            alt={course.name}
+                          />
+                          <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent text-white lg:hidden">
+                            <h3 className="text-lg font-semibold">
+                              {course.name}
+                            </h3>
+                          </div>
                         </div>
-                      </div>
-                      <div className="p-4">
-                        <p className="text-sm text-gray-400">
-                          {course.description}
-                        </p>
-                      </div>
-                      <div className="p-4 flex justify-center items-center bg-st-dark-orange text-xl font-bold text-st-dark-blue">
-                        Iniciar Curso
+                        <div className="p-4">
+                          <p className="text-xs md:text-xl text-gray-400">
+                            {course.description}
+                          </p>
+                        </div>
+                        <div className="p-4 flex justify-center items-center bg-st-dark-orange text-xl font-bold text-st-dark-blue">
+                          Iniciar Curso
+                        </div>
                       </div>
                     </div>
                   </Link>

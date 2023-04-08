@@ -45,6 +45,8 @@ export async function getServerSideProps(context) {
     .limit(1)
     .toArray();
 
+  if (!firstSection || firstSection.length === 0) return redirect404; //if course does not have sections, redirect to 404
+
   const { _id: sectionId } = firstSection[0] || null;
   if (!sectionId) return redirect404; //if course does not have sections, redirect to 404
 
@@ -55,6 +57,8 @@ export async function getServerSideProps(context) {
     .sort({ order: 1 })
     .limit(1)
     .toArray();
+
+  if (!firstLesson || firstLesson.length === 0) return redirect404; //if course does not have lessons, redirect to 404
 
   const { _id: lessonId } = firstLesson[0] || null;
   if (!lessonId) return redirect404; //if course does not have lessons, redirect to 404

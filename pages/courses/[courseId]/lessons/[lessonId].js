@@ -56,7 +56,7 @@ export default function Lesson({ course, enrollment, currentLesson }) {
           <main className="w-full flex-1 md:flex-1 bg-st-dark-blue p-4 md:pl-0 md:pr-8 h-screen overflow-y-auto text-white  lg:ml-96">
             {" "}
             {/* //content here */}
-            <div className="markdown w-full max-w-7xl px-4 ">
+            <div className="markdown w-full max-w-7xl md:px-4 lg:px-8 ">
               {" "}
               <MarkDownContent
                 title={currentLesson.name}
@@ -164,7 +164,7 @@ export async function getServerSideProps(context) {
     .toArray();
 
   //if course does not exist, return not found 404
-  if (!course) {
+  if (!course || course.length === 0) {
     return {
       notFound: true,
     };

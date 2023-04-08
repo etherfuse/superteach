@@ -1,3 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.markdown a {
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.markdown ul {
+  list-style-type: disc; /* O cualquier otro tipo de estilo que prefieras */
+}

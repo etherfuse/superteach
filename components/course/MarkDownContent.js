@@ -103,14 +103,14 @@ const MarkDownContent = ({
           </button>
         )}
 
-        {currentLesson.isLastLesson && !courseCompleted && (
+        {/* {currentLesson.isLastLesson && !courseCompleted && (
           <button
             className="bg-st-blue-2 text-white py-2  rounded-md hover:bg-st-blue-3 underline font-bold "
             onClick={() => completeCourse()}
           >
             Terminar curso
           </button>
-        )}
+        )} */}
       </div>
     </div>
   );
