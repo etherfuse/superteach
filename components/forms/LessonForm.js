@@ -99,8 +99,8 @@ const CourseForm = ({ type = "new" }) => {
                 message: "title must have at least 3 characters",
               },
               maxLength: {
-                value: 18,
-                message: "title must have less than 18 characters",
+                value: 45,
+                message: "title must have less than 45 characters",
               },
               required: {
                 value: true,

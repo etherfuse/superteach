@@ -1,61 +1,73 @@
-/* eslint-disable @next/next/no-img-element */
-import Link from "next/link";
-import { useRouter } from "next/router";
+import LoadingCircle from "@/components/common/LoadingCircle";
+import clientPromise from "@/lib/mongodb";
 
-export default function Course({ course }) {
-  const router = useRouter();
-
+const CourseHomePage = ({ course }) => {
+  console.log("course", course);
   return (
-    <div className="min-h-screen bg-gray-100 py-10">
-      <div className="container mx-auto px-4">
-        <h1 className="text-4xl font-bold mb-10">{course.title}</h1>
-        <div className="bg-white p-8 rounded-md shadow-md">
-          <div className="mb-6">
-            <img
-              className="w-full h-64 object-cover rounded-md"
-              src={course.thumbnail}
-              alt={course.title}
-            />
-          </div>
-          <h2 className="text-2xl font-semibold mb-4">
-            Welcome to the course!
-          </h2>
-          <p className="mb-6">{course.description}</p>
-          <Link href={`/courses/${course.id}/lessons/1`}>
-            <button className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md">
-              Start Course
-            </button>
-          </Link>
-        </div>
-      </div>
+    <div className="min-h-screen bg-st-dark-blue flex items-center justify-center">
+      <LoadingCircle color="#fff" />
     </div>
   );
-}
+};
 
-export async function getStaticPaths() {
-  // Replace with logic to fetch course IDs from the database
-  const courseIds = ["1", "2"];
+export default CourseHomePage;
 
-  const paths = courseIds.map((courseId) => ({
-    params: { courseId },
-  }));
+export async function getServerSideProps(context) {
+  const client = await clientPromise;
+  const db = client.db();
 
-  return { paths, fallback: "blocking" };
-}
-
-export async function getStaticProps({ params }) {
-  // Replace with logic to fetch course data from the database
-  const course = {
-    id: params.courseId,
-    title: `Course ${params.courseId}`,
-    description: `Description of course ${params.courseId}`,
-    thumbnail: "https://via.placeholder.com/300",
+  const redirect404 = {
+    redirect: {
+      destination: "/404",
+      permanent: false,
+    },
   };
 
+  //if course exists redirect to first lesson
+  //if not redirect to 404 page
+
+  //get course id from url
+  const { courseId: courseSlug } = context.params;
+
+  //get courseId using slug
+  const course = await db
+    .collection("courses")
+    .findOne({ slug: courseSlug, isPublic: true });
+
+  if (!course) return redirect404; //if course does not exist, redirect to 404
+
+  //get first section
+  const { _id: courseId } = course;
+  const firstSection = await db
+    .collection("sections")
+    .find({ courseId })
+    .sort({ order: 1 })
+    .limit(1)
+    .toArray();
+
+  if (!firstSection || firstSection.length === 0) return redirect404; //if course does not have sections, redirect to 404
+
+  const { _id: sectionId } = firstSection[0] || null;
+  if (!sectionId) return redirect404; //if course does not have sections, redirect to 404
+
+  //get first lesson
+  const firstLesson = await db
+    .collection("lessons")
+    .find({ sectionId })
+    .sort({ order: 1 })
+    .limit(1)
+    .toArray();
+
+  if (!firstLesson || firstLesson.length === 0) return redirect404; //if course does not have lessons, redirect to 404
+
+  const { _id: lessonId } = firstLesson[0] || null;
+  if (!lessonId) return redirect404; //if course does not have lessons, redirect to 404
+
+  //redirect to first lesson
   return {
-    props: {
-      course,
+    redirect: {
+      destination: `/courses/${courseSlug}/lessons/${lessonId}`,
+      permanent: false,
     },
-    revalidate: 60,
   };
 }
