@@ -35,7 +35,6 @@ const CourseForm = ({ type = "new" }) => {
           `/api/admin/courses/${courseId}/sections/${sectionId}/lessons/${lessonId}`
         );
         const { markdown } = data;
-        console.log("markdown =>", markdown);
         setLesson(data);
         reset(data);
 

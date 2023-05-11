@@ -29,7 +29,6 @@ const AdminCourseLessons = () => {
           `/api/admin/courses/${router.query.courseId}`
         );
 
-        console.log("data =>", data);
         const { sections } = data;
 
         SetSections(sections);

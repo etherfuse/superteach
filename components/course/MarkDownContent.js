@@ -33,12 +33,8 @@ const MarkDownContent = ({
   const sanitizedMarkdown = DOMPurify.sanitize(content, domPurifyConfig);
   const router = useRouter();
   const { data: session, status } = useSession();
-  console.log("session", session);
-
-  console.log("currentLesson", currentLesson);
 
   const completeLesson = async () => {
-    console.log("completeLesson");
     //update completedlessons in the enrollment of the user
     try {
       await axios.put(`/api/enrollments`, {
@@ -58,7 +54,6 @@ const MarkDownContent = ({
   };
 
   const completeCourse = async () => {
-    console.log("completeCourse");
     //update completedlessons in the enrollment of the user
     try {
       await axios.put(`/api/enrollments`, {

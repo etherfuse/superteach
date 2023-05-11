@@ -120,6 +120,23 @@ export async function getServerSideProps(context) {
               },
             },
             {
+              $unwind: "$lessons",
+            },
+            {
+              $sort: {
+                "lessons.order": 1,
+              },
+            },
+            {
+              $group: {
+                _id: "$_id",
+                courseId: { $first: "$courseId" },
+                title: { $first: "$title" },
+                order: { $first: "$order" },
+                lessons: { $push: "$lessons" },
+              },
+            },
+            {
               $addFields: {
                 lessons: {
                   $map: {
